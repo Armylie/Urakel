@@ -1,0 +1,134 @@
+{% extends "bootstrap/base.html" %}
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet"
+          href="{{ url_for('.static', filename='urakel1.css') }}">
+{% endblock %}
+{% block scripts %}
+    <script src="{{ url_for('.static', filename='urakel2.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+            $(document).ready(function(){
+                $('[data-trigger="hover"]').popover();   
+            });
+    </script> 
+    <script>
+            function myFunction() {
+                document.getElementById("Vorschaubild").src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9GYHbaEb7UKc2O9nQFWuPDnFWPUic9cuVfIPbN4fn6iuMRr7OMg";
+            }
+    </script>
+    <script>
+                function myFunction2() {
+                    document.getElementById("Vorschaubild").src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0mbKpx_wSoF_xENtDVDoW97Xlrrz8ji08yTdk_jxaLDaTcKH1";
+                }
+    </script>
+    {{ super() }}
+{% endblock %}
+{% block title %}PrUnt - P-Matrix einfärben und anpassen{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="urakelheader">
+                <div class="row">
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-4">PrUnt - P-Matrix einfärben und anpassen</div>
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-1">
+                        <div class="row">?</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="contentpane">
+                <div class="row">
+                    <div class="col-lg-1">
+                        <div class="emptyspace">.</div>
+                    </div>
+                    <div class="col-lg-2">
+                            <div class="emptyspace"></div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="emptyspace">.</div>
+                    </div>
+                </div>
+                <div class="row">
+                </div>
+                <div class="row">
+                    <div class="col-lg-1">
+                        <div class="emptyspace">.</div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="emptyspace"></div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="emptyspace">.</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="emptyspace">EmptySpace</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-1">
+                        <div class="emptyspace">.</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="emptyspace">.</div>
+                    </div>
+                    <div class="col-lg-6">
+                            <form method="POST" action="pmatrixslider">
+                                    <h4>Farbauswahl:</h4>
+                                    <select id="Qualitätsdropdown" name="colour" method="GET" action="/">
+                                        <option value="{{colours[0]}}" selected>{{colours[0]}}</option>
+                                        {% for colour in colours[1:] %}
+                                            <option value="{{colour}}">{{colour}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <h4>Schichtbreite</h4>
+                                    <input type="range" min="0" max="100" name="pschichtbreite" />
+                                    <h4>Offset</h4>
+                                    <input type="range" min="0" max="100" name="poffset" />
+                                    <input type="submit" value="apply" />
+                                </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="previewpane">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1>Vorschaubild der P-Matrix</h1>
+                        <img id="Vorschaubild" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0mbKpx_wSoF_xENtDVDoW97Xlrrz8ji08yTdk_jxaLDaTcKH1">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="emptyspace"> More empty Space</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3">
+            <div class="nextbutton"><button>Next</button></div>  
+        </div>
+    </div>
+{% endblock %}
+
+
+

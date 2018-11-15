@@ -1,0 +1,51 @@
+ /*TODO: aufräumen, was wird nicht mehr verwendet?!*/
+
+div{
+  text-align: center;
+}
+.row{
+  padding: 0
+}
+.urakelheader{
+  background-color: lightgrey;
+  margin: 1%
+}
+
+.nextbutton{
+  background-color: darkgrey
+}
+.contentpane{
+  background-color: white;
+  margin: 1%
+}
+.contentpane .row{
+  margin-bottom:1%;
+  margin-top:1%;
+}
+.previewpane{
+  margin: 1%;
+  background-color: lightblue
+}
+img{
+  padding: 2%;
+  margin: 2%;
+}
+.container{
+  border-style: solid;
+  padding: 1%;
+}
+.emptyspace{
+  background-color:white;
+  color:white
+}
+.buttons{
+  background-color:lightgreen;
+  border: solid
+}
+.col-lg-2{
+  padding: 0;
+  margin-left: 2%
+}
+h3{
+  text-align:left
+}

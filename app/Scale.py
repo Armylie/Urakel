@@ -1,0 +1,1 @@
+bpy.context.object.dimensions[2] = Z

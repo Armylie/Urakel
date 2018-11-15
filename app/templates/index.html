@@ -1,0 +1,131 @@
+{% extends "bootstrap/base.html" %}
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('.static', filename='urakel1.css') }}">
+{% endblock %}
+{% block scripts %}
+    <script src="{{ url_for('.static', filename='urakel2.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('[data-trigger="hover"]').popover();
+        });
+    </script>
+    <script>
+        function myFunction() {
+            document.getElementById("Vorschaubild").src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9GYHbaEb7UKc2O9nQFWuPDnFWPUic9cuVfIPbN4fn6iuMRr7OMg";
+            document.getElementById("Vorschaubild").style.display = "block";
+            document.getElementById("welcome_text").style.display = "none";
+        }
+    </script>
+    <script>
+        function myFunction2() {
+            document.getElementById("Vorschaubild").src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0mbKpx_wSoF_xENtDVDoW97Xlrrz8ji08yTdk_jxaLDaTcKH1";
+            document.getElementById("Vorschaubild").style.display = "block";
+            document.getElementById("welcome_text").style.display = "none";
+        }
+    </script>
+    {{ super() }}
+{% endblock %}
+{% block title %}PrUnt - a software by Urakel{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <img src="../static/Icon.png" height="50" width="50">
+                    </div>
+                    <p class="navbar-text">PrUnt - a software by Urakel</p>
+                    <div class="nav navbar-nav navbar-right">
+                        <h3><span class="glyphicon glyphicon-question-sign"></span></h3>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="contentpane">
+
+                    <h3>Choose your matrix-style:</h3>
+                    <div class="row">
+                        <div class="col-lg-3 col-lg-offset-1">
+                            <button class="btn btn-primary btn-lg" onclick="myFunction()">U-Matrix</button>
+                        </div>
+                        <div class="col-lg-3 col-lg-offset-1">
+                            <button class="btn btn-primary btn-lg" onclick="myFunction2()">P-Matrix</button>
+                        </div>
+                    </div>
+                    <br><br>
+
+
+                    <form action="" method="post" enctype="multipart/form-data" novalidate>
+                        <h3>Choose your .stl file and desired quality:</h3>
+                        <div class="row">
+                            <div class="col-lg-6 col-lg-offset-1">
+                                {{ form.hidden_tag() }}
+                                <h4>
+                                    <!-- //TODO: optisch anpassen, Defaultwerte?, Glyphicon verwenden -->
+                                    {{ form.file() }}
+                                </h4>
+                            </div>
+                            <div class="col-lg-5">
+                                <h4>
+                                    <div data-trigger="hover" title="&nbsp;&nbsp;&nbsp;&nbsp;Information&emsp;"
+                                         data-content=" Low: For x to y RAM: Delivers a less smooth Matrix.
+                                    Medium: For x to y RAM: Delivers a smooth Matrix.
+                                    High: For x to y RAM: Delivers a super smooth Matrix.">
+                                        <b><u> {{ form.quality.label }}</u></b>
+                                        {{ form.quality() }}
+                                        <span class="glyphicon glyphicon-info-sign"></span>
+                                    </div>
+                                </h4>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-3 col-lg-offset-9">
+                                {{ form.submit(class_="btn btn-info btn-lg") }}
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="previewpane">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <center><img id="Vorschaubild" style="display:none;"></center>
+                            <div id=welcome_text>
+                                <h2>„Welcome to PrUnt!<br>
+                                    <small>This is a software where you can generate a print-ready U-Matrix or P-Matrix
+                                        with different colorscemes and dimensions fitted to your needs. First you should
+                                        choose if you’d like to work with a U-Matrix or P-Matrix and Upload your .stl
+                                        file to get started. At every screen you can find help via the
+                                        <span class="glyphicon glyphicon-question-sign"></span> button at the
+                                        top right corner.“
+                                    </small>
+                                </h2>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+
+
+
