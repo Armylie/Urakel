@@ -31,4 +31,4 @@ def scale(arguments):
 if __name__ == "__main__":
     outpath = inpath.replace('.stl','_trans.stl')
     #trans([inpath,outpath])
-    scale(['0','5','5','5',inpath,outpath]) # TODO: File einlesen und ausgeben !!!!
+    scale(['0','5','5','5',inpath,outpath])
