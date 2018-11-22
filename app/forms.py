@@ -13,9 +13,9 @@ class UPForm(FlaskForm):
     choice = RadioField(choices = ['U-Matrix','P-Matrix'])
 
 class ScaleForm(FlaskForm):
-    x = DecimalField()
-    y = DecimalField()
-    z = DecimalField()
-    unit = SelectField('Unit', choices = [(0,'mm'),(1,'px')], coerce = int, validators =[DataRequired()])
+    x = DecimalField(validators = [DataRequired()])
+    y = DecimalField(validators = [DataRequired()])
+    z = DecimalField(validators = [DataRequired()])
+    unit = SelectField('Unit', choices = [(1,'mm'),(2,'px')], coerce = int, validators =[DataRequired()])
     submit = SubmitField('Apply')
 

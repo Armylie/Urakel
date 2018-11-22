@@ -39,14 +39,14 @@ def pmatrixmodify():
 @app.route('/scaleandsave', methods=['GET', 'POST'])
 def scaleandsave():
     form = ScaleForm()
-    dims = Main.scale([ACTPATH,ACTPATH,'3'])
-    print(dims)
-    form.x.data = dims[0]
-    form.y.data= dims[1]
-    form.z.data = dims[2]
     if form.validate_on_submit():
-        # TODO: führe Skalierung aus
+        # TODO: andere Arten der Skalierung
+        Main.scale([ACTPATH,ACTPATH,'0',str(form.x.data),str(form.y.data),str(form.z.data)])
         return render_template('scaleandsave.html', title='Scale and Save', form=form)
+    dims = Main.scale([ACTPATH, ACTPATH, '3'])
+    form.x.data = dims[0]
+    form.y.data = dims[1]
+    form.z.data = dims[2]
     return render_template('scaleandsave.html', title='Scale and Save', form = form)
 
 # @app.route('/popup')
