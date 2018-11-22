@@ -1,4 +1,5 @@
 import bpy # Fehler kann erstmal ignoriert werden, löst sich zur Laufzeit
+import csv
 import sys
 
 # Initialisierung -> klären der Arbeitsoberfläche und Laden der in inpath gespeicherten Datei
@@ -33,16 +34,16 @@ def getValues():
     return [bpy.context.object.dimensions[0],bpy.context.object.dimensions[1],bpy.context.object.dimensions[2]]
 
 if __name__ == "__main__":
-    initialize(sys.argv[9])
+    initialize(sys.argv[5])
 
     # TODO: anders Steuern welche Funktion ausgeführt wird
-    if sys.argv[5] == '0':
-        changeDim(float(sys.argv[6]),float(sys.argv[7]),float(sys.argv[8]))
-    elif sys.argv[5] == 1:
-        changeHeight(sys.argv[6])
-    elif sys.argv[5] == 2:
-        changeScaled(sys.argv[6])
-    elif sys.argv[6] == 3:
-        getValues() # TODO: geht das mit Returns so? Vermutlich nicht, da Aufruf in Blender -> wie bekommen wir die Werte da raus?
-        # TODO: brauchen wir die Werte überhaupt? (damit Nutzer die sehen kanne!, Alternative: jede Matrix direkt auf nen Defailt skalieren den wir kennen?)
-    bpy.ops.export_mesh.stl(filepath=sys.argv[10])
+    if sys.argv[7] == '0':
+        changeDim(float(sys.argv[8]),float(sys.argv[9]),float(sys.argv[10]))
+    elif sys.argv[7] == '1':
+        changeHeight(sys.argv[8])
+    elif sys.argv[7] == '2':
+        changeScaled(sys.argv[8])
+    elif sys.argv[7] == '3':
+        with open('C:\\Users\\Sara\\Desktop\\Upload\\dim.csv','w') as file:
+            csv.writer(file).writerow(getValues())
+    bpy.ops.export_mesh.stl(filepath=sys.argv[6])
