@@ -34,10 +34,19 @@ def pmatrixmodify():
     return render_template('pmatrixmodify.html', title='P-Matrix', colours=COLOURS)
 
 
-@app.route('/scaleandsave', methods=['GET', 'POST'])
-def scaleandsave():
-    return render_template('scaleandsave.html', title='Scale and Save', scales=SCALES)
+@app.route('/scale', methods=['GET', 'POST'])
+def scale():
+    scales = ['mm', 'px']
+    return render_template('scale.html', title='Scaling',scales=scales)
 
-# @app.route('/popup')
-# def user_popup():
-#    return render_template('popup.html', title='Popup-Hilfe')
+@app.route('/saveandexport', methods=['GET', 'POST'])
+def saveandexport():
+    return render_template('saveandexport.html', title='Save and Export')
+
+@app.route('/popup')
+def user_popup():
+    return render_template('popup.html', title='Popup-Hilfe')
+
+@app.route('/render', methods=['GET', 'POST'])
+def render_3d():
+    return render_template('Rendering/index.html', title='Render')
