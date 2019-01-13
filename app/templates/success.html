@@ -1,0 +1,21 @@
+{% extends "bootstrap/base.html" %}
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet"
+          href="{{ url_for('.static', filename='urakel1.css') }}">
+{% endblock %}
+{% block scripts %}
+    <script src="{{ url_for('.static', filename='urakel2.js') }}"></script>
+    {{ super() }}
+{% endblock %}
+{% block title %}This is an example page{% endblock %}
+<!--
+{% block navbar %}
+<div class="navbar navbar-fixed-top">
+  ...
+</div>
+{% endblock %} -->
+
+{% block content %}
+    <h1>Yay, die transformierte Datei wurde unter {{ path }} abgepeichert! </h1>
+{% endblock %}

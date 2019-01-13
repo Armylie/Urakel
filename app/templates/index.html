@@ -14,7 +14,7 @@
     </script>
     <script>
         function myFunction() {
-            document.getElementById("Vorschaubild").src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9GYHbaEb7UKc2O9nQFWuPDnFWPUic9cuVfIPbN4fn6iuMRr7OMg";
+            document.getElementById("Vorschaubild").src="/render"; // .src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9GYHbaEb7UKc2O9nQFWuPDnFWPUic9cuVfIPbN4fn6iuMRr7OMg"
             document.getElementById("Vorschaubild").style.display = "block";
             document.getElementById("welcome_text").style.display = "none";
         }
@@ -26,6 +26,16 @@
             document.getElementById("welcome_text").style.display = "none";
         }
     </script>
+    <script>
+        function myFunction3() {
+            document.getElementById("EasyExpert").innerHTML = "<button class='btn btn-primary btn-lg' onclick='myFunction4()'>Expert-Mode?</button>";
+        }
+    </script>
+        <script>
+            function myFunction4() {
+                document.getElementById("EasyExpert").innerHTML = "<button class='btn btn-primary btn-lg' onclick='myFunction3()'>Easy-Mode?</button>";
+            }
+        </script>
     {{ super() }}
 {% endblock %}
 {% block title %}PrUnt - a software by Urakel{% endblock %}
@@ -58,6 +68,9 @@
                         </div>
                         <div class="col-lg-3 col-lg-offset-1">
                             <button class="btn btn-primary btn-lg" onclick="myFunction2()">P-Matrix</button>
+                        </div>
+                        <div class="col-lg-3 col-lg-offset-1" id="EasyExpert">
+                            <button class="btn btn-primary btn-lg" onclick="myFunction3()">Easy-Mode?</button>
                         </div>
                     </div>
                     <br><br>
@@ -101,7 +114,7 @@
                 <div class="previewpane">
                     <div class="row">
                         <div class="col-lg-12">
-                            <center><img id="Vorschaubild" style="display:none;"></center>
+                            <center><iframe id="Vorschaubild"></iframe></center>
                             <div id=welcome_text>
                                 <h2>„Welcome to PrUnt!<br>
                                     <small>This is a software where you can generate a print-ready U-Matrix or P-Matrix

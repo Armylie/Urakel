@@ -1,0 +1,108 @@
+{% extends "bootstrap/base.html" %}
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet"
+          href="{{ url_for('.static', filename='urakel1.css') }}">
+{% endblock %}
+{% block scripts %}
+    <script src="{{ url_for('.static', filename='urakel2.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    {{ super() }}
+{% endblock %}
+{% block title %}PrUnt - Matrix speichern und exportieren{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="urakelheader">
+                <div class="row">
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-4">PrUnt - Matrix skalieren</div>
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-1">
+                        <div class="row">?</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="contentpane">
+                <div class="row">
+                    <div class="col-lg-1">
+                        <div class="emptyspace">.</div>
+                    </div>
+                    <div class="col-lg-2">
+                            <div class="emptyspace"></div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="emptyspace">.</div>
+                    </div>
+                </div>
+                <div class="row">
+                </div>
+                <div class="row">
+                    <div class="col-lg-1">
+                        <div class="emptyspace">.</div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="emptyspace"></div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="emptyspace">.</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="emptyspace">EmptySpace</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-1">
+                        <div class="emptyspace">.</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="emptyspace">.</div>
+                    </div>
+                    <div class="col-lg-6">
+                            <form method="POST" action="export">
+                                    <input type="submit" value="Export" />
+                            </form>
+                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="previewpane">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1>Vorschaubild der Matrix</h1>
+                        <img id="Vorschaubild" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9GYHbaEb7UKc2O9nQFWuPDnFWPUic9cuVfIPbN4fn6iuMRr7OMg">
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="emptyspace"> More empty Space</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-3">
+            <div class="backtostartbutton"><button>Back to Start</button></div>
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+{% endblock %}
+
+
+
