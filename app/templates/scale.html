@@ -15,109 +15,91 @@
 
 {% block content %}
     <div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="urakelheader">
-                <div class="row">
-                    <div class="col-lg-4"></div>
-                    <div class="col-lg-4">PrUnt - Matrix skalieren</div>
-                    <div class="col-lg-3"></div>
-                    <div class="col-lg-1">
-                        <div class="row">?</div>
+        <div class="row">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <img src="../static/Icon.png" height="50" width="50">
+                    </div>
+                    <p class="navbar-text">PrUnt - a software by Urakel</p>
+                    <div class="nav navbar-nav navbar-right">
+                        <h3><span class="glyphicon glyphicon-question-sign"></span></h3>
                     </div>
                 </div>
-            </div>
+            </nav>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="contentpane">
-                <div class="row">
-                    <div class="col-lg-1">
-                        <div class="emptyspace">.</div>
-                    </div>
-                    <div class="col-lg-2">
-                            <div class="emptyspace"></div>
-                    </div>
-                    <div class="col-lg-9">
-                        <div class="emptyspace">.</div>
-                    </div>
-                </div>
-                <div class="row">
-                </div>
-                <div class="row">
-                    <div class="col-lg-1">
-                        <div class="emptyspace">.</div>
-                    </div>
-                    <div class="col-lg-2">
-                        <div class="emptyspace"></div>
-                    </div>
-                    <div class="col-lg-9">
-                        <div class="emptyspace">.</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="emptyspace">EmptySpace</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-1">
-                        <div class="emptyspace">.</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-2">
-                        <div class="emptyspace">.</div>
-                    </div>
-                    <div class="col-lg-6">
-                            <form method="POST" action="scaleslider">
-                                    <b><u>Einheit:</u></b>
-                                    <select id="scaledropdown" name="scale" method="GET" action="/">
-                                        <option value="{{scales[0]}}" selected>{{scales[0]}}</option>
-                                        {% for scale in scales[1:] %}
-                                            <option value="{{scale}}">{{scale}}</option>
-                                        {% endfor %}
-                                    </select>
-                                    <input type="submit" value="apply" />
-                                </form>
-                    <button>&#8592</button>
-                    <button>&#8593</button>
-                    <button>&#8594</button>
-                    <button>&#8595</button>
-                    <br>
-                    <button>+</button>
-                    <button>-</button>
-                    <br>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="previewpane">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1>Vorschaubild der Matrix</h1>
-                        <img id="Vorschaubild" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9GYHbaEb7UKc2O9nQFWuPDnFWPUic9cuVfIPbN4fn6iuMRr7OMg">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="contentpane">
+                    <div class="row">
+                        <div class="col-lg-6 col-lg-offset-2">
+                            <form action="" method="post">
+                                {{ form.hidden_tag() }}
+                                <h4>
+                                    X: {{ form.x }}
+                                    Y: {{ form.y }}
+                                    Z: {{ form.z }}
+                                    <span class="glyphicon glyphicon-lock"></span>
+                                    <br>
+                                    <br>
+                                    Unit: {{ form.unit }}&nbsp;&nbsp;
+                                    {{ form.submit(class_="btn btn-info btn-lg") }}
+                                </h4>
+                            </form>
                         </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="emptyspace"> More empty Space</div>
+                    </div>
+                    <br> <br>
+                    <div class="row">
+                        <div class="col-lg-3 col-lg-offset-2">
+                            <button><span class="glyphicon glyphicon-arrow-up"></span></button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-lg-offset-2">
+                            <button><span class="glyphicon glyphicon-arrow-left"></span></button>
+                            <button><span class="glyphicon glyphicon-arrow-right"></span></button>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <button><span class="glyphicon glyphicon-plus-sign"></span></button>
+                            <button><span class="glyphicon glyphicon-minus-sign"></span></button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-lg-offset-2">
+                            <button><span class="glyphicon glyphicon-arrow-down"></span></button>
+                        </div>
                     </div>
                 </div>
-            </div>
+
         </div>
+    <div class="col-lg-6">
+        <div class="previewpane">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>Vorschaubild der Matrix</h1>
+                    <img id="Vorschaubild"
+                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9GYHbaEb7UKc2O9nQFWuPDnFWPUic9cuVfIPbN4fn6iuMRr7OMg">
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
     </div>
     <div class="row">
         <div class="col-lg-3"></div>
         <div class="col-lg-3"></div>
         <div class="col-lg-3">
-            <div class="backtostartbutton"><button>Back to Start</button></div>
+            <div class="backtostartbutton">
+                <button>Back to Start</button>
+            </div>
         </div>
         <div class="col-lg-3">
-            <div class="nextbutton"><button>Next</button></div>  
+            <div class="nextbutton">
+                <button>Next</button>
+            </div>
         </div>
+    </div>
     </div>
 {% endblock %}
 

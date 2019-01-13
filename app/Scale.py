@@ -1,3 +1,6 @@
+# Verwaltung von verschiedenen Skalierungsfunktionen
+
+
 import bpy # Fehler kann erstmal ignoriert werden, löst sich zur Laufzeit
 import csv
 import sys
@@ -9,7 +12,7 @@ def initialize(inpath):
     bpy.ops.object.delete(use_global=False)
     bpy.ops.import_mesh.stl(filepath=inpath)
 
-
+# ändert alle drei übergebenen Dimensionen
 def changeDim(X,Y,Z):
     bpy.context.object.dimensions[0] = X
     bpy.context.scene.update()
@@ -18,10 +21,12 @@ def changeDim(X,Y,Z):
     bpy.context.object.dimensions[2] = Z
     bpy.context.scene.update()
 
+# verändert nur die Höhe der Matrix
 def changeHeight(Z):
     bpy.context.object.dimensions[2] = Z
     bpy.context.scene.update()
 
+# verändert Breite und Tiefe der Matrix im passenden Verhältnis, Höhe bleibt erhalten
 def changeScaled(X):
     oldX = bpy.context.object.dimensions[0]
     oldY = bpy.context.object.dimensions[1]
@@ -30,9 +35,12 @@ def changeScaled(X):
     bpy.context.object.dimension[1] = oldY/oldX * X
     bpy.context.scene.update()
 
+# Rückgabe der aktuellen Werte für Breite, Tiefe, Höhe
 def getValues():
     return [bpy.context.object.dimensions[0],bpy.context.object.dimensions[1],bpy.context.object.dimensions[2]]
 
+
+# Ausführung einer der obigen Funktionen (je nach übergebenem Parameter an stelle sys.argv[7]
 if __name__ == "__main__":
     initialize(sys.argv[5])
 
@@ -44,6 +52,8 @@ if __name__ == "__main__":
     elif sys.argv[7] == '2':
         changeScaled(sys.argv[8])
     elif sys.argv[7] == '3':
+        # Speichern der X,Y,Z Werte in csv Datei zur späteren Weiterverarbeitung
         with open('C:\\Users\\Sara\\Desktop\\Upload\\dim.csv','w') as file:
             csv.writer(file).writerow(getValues())
+    # Speichern der geänderten Datei
     bpy.ops.export_mesh.stl(filepath=sys.argv[6])

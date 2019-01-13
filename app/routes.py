@@ -7,7 +7,6 @@ import os
 # allgemeiner Pfad zum Zwischenspeichern von Dateien (natürlich bei jedem User individuell)
 PATH = "C:\\Users\\Sara\\Desktop\\Upload"
 COLOURS = ['altitude scale', 'heatmap', 'white']
-SCALES = ['mm', 'px']
 ACTPATH = "\"C:\\Users\\Sara\\Desktop\\Upload\\UStar_trans.stl\"" # nur temporär, später  = ''
 
 
@@ -22,7 +21,14 @@ def index():
         outpath = inpath.replace('.stl', '_trans.stl')
         Main.trans([inpath, outpath, str(form.quality.data)])
         ACTPATH = outpath # so kann später mit diesem Ergebnis weiter gearbeitet werden
-        return render_template('umatrixmodify.html', title='U-Matrix', colours=COLOURS)
+
+        # Werte für Skalierungsmaske
+        forms = ScaleForm()
+        dims = Main.scale([ACTPATH, ACTPATH, '3'])
+        forms.x.data = dims[0]
+        forms.y.data = dims[1]
+        forms.z.data = dims[2]
+        return render_template('scale.html', title='Skalieren', form = forms) # TODO: Hä? Warum ändert sich die URL nicht?
     return render_template('index.html', title='Home', form=form)
 
 
@@ -36,12 +42,6 @@ def pmatrixmodify():
     return render_template('pmatrixmodify.html', title='P-Matrix', colours=COLOURS)
 
 
-
-@app.route('/scale', methods=['GET', 'POST'])
-def scale():
-    scales = ['mm', 'px']
-    return render_template('scale.html', title='Scaling',scales=scales)
-
 @app.route('/saveandexport', methods=['GET', 'POST'])
 def saveandexport():
     return render_template('saveandexport.html', title='Save and Export')
@@ -54,17 +54,17 @@ def user_popup():
 def render_3d():
     return render_template('Rendering/index.html', title='Render')
 
-@app.route('/scaleandsave', methods=['GET', 'POST'])
-def scaleandsave():
+@app.route('/scale', methods=['GET', 'POST'])
+def scale():
     form = ScaleForm()
     if form.validate_on_submit():
         # TODO: andere Arten der Skalierung
+        print('validate ------------------------------------------------------------')
         Main.scale([ACTPATH,ACTPATH,'0',str(form.x.data),str(form.y.data),str(form.z.data)])
-        return render_template('scaleandsave.html', title='Scale and Save', form=form)
+        return render_template('scale.html', title='Scale and Save', form=form)
     dims = Main.scale([ACTPATH, ACTPATH, '3'])
     form.x.data = dims[0]
     form.y.data = dims[1]
     form.z.data = dims[2]
-    scales = ['mm', 'px']
-    return render_template('scaleandsave.html', title='Scale and Save', form = form)
+    return render_template('scale.html', title='Scale and Save', form = form)
 

@@ -1,3 +1,5 @@
+# Verwaltet verschiedene Methoden zur Grundtransformation der .stl Datei
+
 import bpy # Fehler kann erstmal ignoriert werden, löst sich zur Laufzeit
 import sys
 
@@ -22,7 +24,7 @@ def buildbase(height):
     bpy.ops.transform.translate(value=(0, 0, -height))
 
 # vollständige Transformation
-# TODO: + erste Färbung
+# TODO: + erste Färbung (-> wirklich hier? oder erst an anderer Stelle (nach skalieren)
 # TODO: anderer Smooth-Wert? auch diesen bei verschiedenen Qualitäten anpassen?
 def transform(inpath,outpath,numdiv = 2, numsmooth = 4, height = 5):
     initialize(inpath)
@@ -32,5 +34,5 @@ def transform(inpath,outpath,numdiv = 2, numsmooth = 4, height = 5):
 
 
 if __name__ == "__main__":
-    # TODO: gibt es noch Möglichkeit Funktion ohne numdiv aufzurufen?
+    # TODO: verschiedene Möglichkeiten zur Parameterübergabe? Wo default verwenden?
     transform(sys.argv[5],sys.argv[6],numdiv = int (sys.argv[7]))
