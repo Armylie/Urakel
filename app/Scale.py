@@ -44,7 +44,6 @@ def getValues():
 if __name__ == "__main__":
     initialize(sys.argv[5])
 
-    # TODO: anders Steuern welche Funktion ausgeführt wird
     if sys.argv[7] == '0':
         changeDim(float(sys.argv[8]),float(sys.argv[9]),float(sys.argv[10]))
     elif sys.argv[7] == '1':

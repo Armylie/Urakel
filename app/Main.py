@@ -14,12 +14,9 @@ scalepath = "\"C:\\Users\\Sara\\Desktop\\Neuer Ordner\\Urakel\\app\\Scale.py\""
 inpath = "\"C:\\Users\\Sara\\Desktop\\Upload\\UStar.stl\""
 
 
-# Reihenfolge der Übergebenen Argumente: inpath outpath numdiv numsmooth height
-# TODO: Nope inpath outpath quality -> numdiv und numsmooth für verschiedene Qualitäten festlegen
+# Reihenfolge der Übergebenen Argumente: inpath outpath quality
 def trans(arguments):
-    argument_string = ""
-    for a in range(len(arguments)):
-        argument_string += arguments[a] + " "
+    argument_string = " ".join(arguments)
     os.chdir(blenderpath)
     os.system("blender --background --python " + trafopath + " -- " + argument_string)
 
@@ -27,9 +24,7 @@ def trans(arguments):
 # Modi: 0 - alle Dimensionen ; 1 - nur Höhe ; 2 - Boden ändern, skaliert ; 3 - Rückgabe der aktuellen Dimension
 def scale(arguments):
     open('C:\\Users\\Sara\\Desktop\\Upload\\dim.csv', 'w').close()  # Datei erzeugen/leeren um X,Y,Z Werte speichern zu können
-    argument_string = ""
-    for a in range(len(arguments)):
-        argument_string += arguments[a] + " "
+    argument_string = " ".join(arguments)
     os.chdir(blenderpath)
     os.system("blender --background --python " + scalepath + " -- " + argument_string)
     with open('C:\\Users\\Sara\\Desktop\\Upload\\dim.csv','r') as file:
