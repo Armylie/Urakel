@@ -32,6 +32,20 @@ def scale(arguments):
             return [float(x) for x in row]
             # -> Rückgabe der neuen Größe
 
+# Reihenfolge der Übergebenen Argumente: inpath outpath texName mode size offset
+# mode: 0 - Färben ohne size und offset, 1 - mit Parametern
+def color_geographic(arguments):
+    argument_string = " ".join(arguments)
+    os.chdir(blenderpath)
+    # TODO: os.system...
+
+# Reihenfolge der Übergebenen Argumente: inpath outpath islandpath
+def color_political(arguments):
+    argument_string = " ".join(arguments)
+    os.chdir(blenderpath)
+    #TODO: os.system...
+
+
 # zu Testzwecken, ab finaler Verwendung über Anwendung nicht mehr benötigt
 if __name__ == "__main__":
     outpath = inpath.replace('.stl','_trans.stl')
