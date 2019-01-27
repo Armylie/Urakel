@@ -1,17 +1,23 @@
 import os
 import csv
-# TODO: from app import Trafo , wenn Lösung für bpy import gefunden
-
-#print(Trafo.__file__)  --> im Idealfall verwenden als Trafopath damit kein absoluter Pfad mehr übergeben werden muss
 
 # Pfade welche vom User am Anfang abgefragt werden (oder bei Installation des Programms gesetzt werden)
 blenderpath = "C:\\Program Files\\Blender Foundation\\Blender"
-trafopath = "\"C:\\Users\\Sara\\Desktop\\Neuer Ordner\\Urakel\\app\\Trafo.py\""
-scalepath = "\"C:\\Users\\Sara\\Desktop\\Neuer Ordner\\Urakel\\app\\Scale.py\""
+texpath = "C:\\Users\\Sara\\Desktop\\Upload\\Texturierungsumgebung2.blend"
 
-# Pfad welcher vom User auf erster Maske abgefragt wird
-# steht hier nur zum einfacheren testen (ohne UI)
+# Pfade für entsprechende Pythondateien öffnen, in richtigem Format um durch Blender genutzt zu werden
+#trafopath = "\"C:\\Users\\Sara\\Desktop\\Neuer Ordner\\Urakel\\app\\Trafo.py\""
+#scalepath = "\"C:\\Users\\Sara\\Desktop\\Neuer Ordner\\Urakel\\app\\Scale.py\""
+trafopath = "\"" + __file__.replace('Main','Trafo').replace('/','\\') + "\""
+scalepath = "\"" + __file__.replace('Main','Scale').replace('/','\\') + "\""
+colorpath = "\"" + __file__.replace('Main','Color').replace('/','\\') + "\""
+pcolorpath = "\"" + __file__.replace('Main','political_coloring').replace('/','\\') + "\""
+
+
+# Pfade welcher vom User auf erster Maske abgefragt wird
+# stehen hier nur zum einfacheren testen (ohne UI)
 inpath = "\"C:\\Users\\Sara\\Desktop\\Upload\\UStar.stl\""
+islandpath = "\"C:\\Users\\Sara\\Desktop\\Upload\\island.txt\""
 
 
 # Reihenfolge der Übergebenen Argumente: inpath outpath quality
@@ -37,17 +43,16 @@ def scale(arguments):
 def color_geographic(arguments):
     argument_string = " ".join(arguments)
     os.chdir(blenderpath)
-    # TODO: os.system...
+    os.system("blender --background " + texpath + " --python " + colorpath + " -- " + argument_string)
 
 # Reihenfolge der Übergebenen Argumente: inpath outpath islandpath
 def color_political(arguments):
     argument_string = " ".join(arguments)
     os.chdir(blenderpath)
-    #TODO: os.system...
+    os.system("blender --background --python " + pcolorpath + " -- " + argument_string)
 
 
 # zu Testzwecken, ab finaler Verwendung über Anwendung nicht mehr benötigt
 if __name__ == "__main__":
-    outpath = inpath.replace('.stl','_trans.stl')
-    #trans([inpath,outpath])
-    print(scale([inpath, outpath,'3','5','5','5']))
+    outpath = inpath.replace('.stl','_trans.obj')
+    color_political([inpath,outpath,islandpath])

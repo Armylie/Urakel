@@ -2,6 +2,7 @@
 # Allgemein: ob = bpy.data.objects.get("UStar")  statt bpy.context.object
 #--------------------------------------------------------------------
 import sys
+import bpy
 
 inpath = "C:\\Users\\Sara\\Desktop\\Upload\\UStar.stl"
 outpath = "C:\\Users\\Sara\\Desktop\\Upload\\UTrans.obj"
@@ -56,7 +57,7 @@ def mapAndExport(outpath):
 
 
 # vollständige Färbung
-def color(inpath,outpath,texName,mode,size = 1.63, offset = 0.15):
+def color(inpath,outpath,texName,size = 1.63, offset = 0.15):
     initialize(inpath)
     initColor(texName)
     setSizeAndOffset(size,offset)
@@ -64,7 +65,8 @@ def color(inpath,outpath,texName,mode,size = 1.63, offset = 0.15):
 
 
 if __name__ == "__main__":
-    if sys.argv[8] == 0: # Färben ohne size und offset
-        color(sys.argv[5],sys.argv[6],sys.argv[7])
+    print(sys.argv[9])
+    if sys.argv[9] == '0': # Färben ohne size und offset
+        color(sys.argv[6],sys.argv[7],sys.argv[8])
     else:
-        color(sys.argv[5],sys.argv[6],sys.argv[7],sys.argv[9],sys.argv[10])
+        color(sys.argv[6],sys.argv[7],sys.argv[8],float(sys.argv[10]),float(sys.argv[11]))
