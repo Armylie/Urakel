@@ -1,0 +1,10 @@
+
+Wartekreis ins Frontend
+
+Verhältnis-Funktion-Frontend-Anpassung(Scale) - Update Javascript
+Formular-Werte-Übermittlung - :)
+
+Easy-Expert Slider
+U/P-Matrix Button als Dropdown
+Dropdown Politische Färbung
+Auswahl Politisch/NichtPolitisch ins Frontend
