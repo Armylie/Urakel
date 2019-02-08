@@ -1,9 +1,16 @@
 # Verwaltung von verschiedenen Skalierungsfunktionen
 
-
 import bpy # Fehler kann erstmal ignoriert werden, löst sich zur Laufzeit
 import csv
 import sys
+
+# öffnen der 'Datenbank'
+# TODO: öffnen über relativen Pfad
+with open('C:\\Users\\Sara\\Desktop\\Neuer Ordner\\Urakel\\app\\paths.txt') as file:
+    data = eval(file.read())
+
+# Pfade welche vom User am Anfang abgefragt werden (oder bei Installation des Programms gesetzt werden)
+savepath = data.get('SAVEPATH')
 
 # Initialisierung -> klären der Arbeitsoberfläche und Laden der in inpath gespeicherten Datei
 def initialize(inpath):
@@ -21,20 +28,6 @@ def changeDim(X,Y,Z):
     bpy.context.object.dimensions[2] = Z
     bpy.context.scene.update()
 
-# verändert nur die Höhe der Matrix
-def changeHeight(Z):
-    bpy.context.object.dimensions[2] = Z
-    bpy.context.scene.update()
-
-# verändert Breite und Tiefe der Matrix im passenden Verhältnis, Höhe bleibt erhalten
-def changeScaled(X):
-    oldX = bpy.context.object.dimensions[0]
-    oldY = bpy.context.object.dimensions[1]
-    bpy.context.object.dimensions[0] = X
-    bpy.context.scene.update()
-    bpy.context.object.dimension[1] = oldY/oldX * X
-    bpy.context.scene.update()
-
 # Rückgabe der aktuellen Werte für Breite, Tiefe, Höhe
 def getValues():
     return [bpy.context.object.dimensions[0],bpy.context.object.dimensions[1],bpy.context.object.dimensions[2]]
@@ -47,12 +40,8 @@ if __name__ == "__main__":
     if sys.argv[7] == '0':
         changeDim(float(sys.argv[8]),float(sys.argv[9]),float(sys.argv[10]))
     elif sys.argv[7] == '1':
-        changeHeight(sys.argv[8])
-    elif sys.argv[7] == '2':
-        changeScaled(sys.argv[8])
-    elif sys.argv[7] == '3':
         # Speichern der X,Y,Z Werte in csv Datei zur späteren Weiterverarbeitung
-        with open('C:\\Users\\Sara\\Desktop\\Upload\\dim.csv','w') as file:
+        with open(savepath+'\\dim.csv','w') as file:
             csv.writer(file).writerow(getValues())
     # Speichern der geänderten Datei
     bpy.ops.export_mesh.stl(filepath=sys.argv[6])

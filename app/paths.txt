@@ -1,0 +1,4 @@
+{"SAVEPATH": "C:\\Users\\Sara\\Desktop\\Upload",
+"BLENDERPATH": "C:\\Program Files\\Blender Foundation\\Blender",
+"TEXTUREPATH": "C:\\Users\\Sara\\Desktop\\Upload\\Texturierungsumgebung2.blend"
+}
