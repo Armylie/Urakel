@@ -18,12 +18,15 @@ ACTPATH =""
 matrixtype = 0
 colortype = 0
 experience = 0
+COLORFILE = ""
+UTEX = "UmatrixTexture"
+PTEX = "PmatrixTexture"
 
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    global ACTPATH, matrixtype, colortype, experience
+    global ACTPATH, matrixtype, colortype, experience, COLORFILE
     form = FileForm()
     if form.validate_on_submit():
         name = form.file.data.filename
@@ -35,6 +38,28 @@ def index():
         matrixtype = form.matrixtype.data
         colortype = form.colortype.data
         experience = form.experience.data
+
+        # COLORFILE speichern
+        if form.colorfile.data.filename != "":
+            COLORFILE = os.path.join(PATH, form.colorfile.data.filename)
+
+        # easy mode:
+        if experience == 2:
+            outpath = ACTPATH.replace('.stl', '.obj')
+            # politische Färbung
+            if colortype == 3:
+                Main.color_political([ACTPATH,outpath,COLORFILE])
+            # normale Färbung ohne Parameter
+            else:
+                # UMatrix
+                if matrixtype == 2:
+                    Main.color_geographic([ACTPATH,outpath,UTEX,'0'])
+                # PMatrix
+                else:
+                    Main.color_geographic([ACTPATH, outpath, PTEX, '0'])
+            return redirect('/saveandexport')
+
+        # expert mode
         return redirect('/scale')
     return render_template('index.html', title='Home', form=form)
 
@@ -72,4 +97,5 @@ def scale():
     form.x.data = dims[0]
     form.y.data = dims[1]
     form.z.data = dims[2]
+    # TODO: über next richtige Weiterleitung entsprechend bei Start gewählter Parameter
     return render_template('scale.html', title='Scale and Save', form = form)

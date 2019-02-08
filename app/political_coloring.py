@@ -27,6 +27,7 @@ def markPolygons(island,c):
     # ignoriere letzte Zeile/Spalte, da Mapping über Knoten, wir aber Knoten-1 vertexe haben
     for x in range(len(island)-1):
         for y in range(len(island[0])-1):
+            # TODO: Umwandlung bei mehr divides
             if island[x,y] == c:
                 bpy.context.active_object.data.polygons[a].select = True
                 bpy.context.active_object.data.polygons[a+1].select = True

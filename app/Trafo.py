@@ -25,7 +25,8 @@ def buildbase(height):
 
 # vollständige Transformation
 # TODO: + erste Färbung (-> wirklich hier? oder erst an anderer Stelle (nach skalieren)
-def transform(inpath,outpath,numdiv = 2, numsmooth = 4, height = 5):
+# TODO: Wert für numsmooth
+def transform(inpath,outpath,numdiv = 2, numsmooth = 2, height = 5):
     initialize(inpath)
     smooth(numdiv,numsmooth)
     buildbase(height)
