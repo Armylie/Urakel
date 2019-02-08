@@ -64,19 +64,27 @@
                     <h3>Choose your matrix-style:</h3>
                     <div class="row">
                         <div class="col-lg-3 col-lg-offset-1">
-                            <button class="btn btn-primary btn-lg" onclick="myFunction()">U-Matrix</button>
+                            <!-- <button class="btn btn-primary btn-lg" onclick="myFunction()">U-Matrix</button>-->
+                        <form action="" method="post" enctype="multipart/form-data" novalidate>
+                        
+                             <b><u> {{ form.matrixtype.label }}</u></b>
+                                        {{ form.matrixtype() }}
                         </div>
                         <div class="col-lg-3 col-lg-offset-1">
-                            <button class="btn btn-primary btn-lg" onclick="myFunction2()">P-Matrix</button>
-                        </div>
+                            <b><u> {{ form.colortype.label }}</u></b>
+                                        {{ form.colortype }}
+                            <!-- <button class="btn btn-primary btn-lg" onclick="myFunction2()">P-Matrix</button>-->
+                       </div>
                         <div class="col-lg-3 col-lg-offset-1" id="EasyExpert">
-                            <button class="btn btn-primary btn-lg" onclick="myFunction3()">Easy-Mode?</button>
+                                <b><u> {{ form.experience.label }}</u></b>
+                                {{ form.experience }}
+                            <!--<button class="btn btn-primary btn-lg" onclick="myFunction3()">Easy-Mode?</button>-->
                         </div>
                     </div>
                     <br><br>
 
 
-                    <form action="" method="post" enctype="multipart/form-data" novalidate>
+                    
                         <h3>Choose your .stl file and desired quality:</h3>
                         <div class="row">
                             <div class="col-lg-6 col-lg-offset-1">
@@ -85,6 +93,7 @@
                                     <!-- //TODO: optisch anpassen, Defaultwerte?, Glyphicon verwenden -->
                                     {{ form.file() }}
                                 </h4>
+                                
                             </div>
                             <div class="col-lg-5">
                                 <h4>
@@ -100,8 +109,16 @@
                             </div>
                         </div>
                         <br>
+                        <h3>Only For Political-Coloring: <b><u>Add Color-Scheme</u></b></h3>
                         <div class="row">
-                            <div class="col-lg-3 col-lg-offset-9">
+                            <div class="col-lg-6 col-lg-offset-1">
+                                {{ form.hidden_tag() }}
+                                <h4>
+                                    {{ form.colorfile() }}
+                                </h4>
+                            </div>
+                            <div class="col-lg-5">
+                            <!--<div class="col-lg-3 col-lg-offset-9">-->
                                 {{ form.submit(class_="btn btn-info btn-lg") }}
                             </div>
                         </div>
