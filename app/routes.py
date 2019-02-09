@@ -31,7 +31,7 @@ def index():
     if form.validate_on_submit():
         name = form.file.data.filename
         inpath = os.path.join(PATH, name)
-        form.file.data.save(inpath) # Zwischenspeichern der Datei # TODO: Datenbank?
+        form.file.data.save(inpath) # Zwischenspeichern der Datei
         outpath = inpath.replace('.stl', '_trans.stl')
         Main.trans([inpath, outpath, str(form.quality.data)])
         ACTPATH = outpath # so kann später mit diesem Ergebnis weiter gearbeitet werden

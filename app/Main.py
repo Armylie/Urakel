@@ -20,8 +20,8 @@ pcolorpath = "\"" + __file__.replace('Main', 'political_coloring').replace('/', 
 
 # Pfade welcher vom User auf erster Maske abgefragt wird
 # stehen hier nur zum einfacheren testen (ohne UI)
-# inpath = "\"C:\\Users\\Sara\\Desktop\\Upload\\UStar.stl\""
-# islandpath = "\"C:\\Users\\Sara\\Desktop\\Upload\\island.txt\""
+inpath = "\"C:\\Users\\Sara\\Desktop\\Upload\\UStar3.stl\""
+islandpath = "\"C:\\Users\\Sara\\Desktop\\Upload\\island.txt\""
 
 
 # Reihenfolge der Übergebenen Argumente: inpath outpath quality
@@ -60,4 +60,8 @@ def color_political(arguments):
     os.chdir(blenderpath)
     os.system("blender --background --python " + pcolorpath + " -- " + argument_string)
 
+
+if __name__ == '__main__':
+    outpath = inpath.replace('.stl','_trans.obj')
+    color_political([inpath,outpath,islandpath])
 
