@@ -25,7 +25,9 @@ class ScaleForm(FlaskForm):
     submit = SubmitField('Apply')
 
 class ColorForm(FlaskForm):
+    # TODO: replace White mit Political
     colorscheme = SelectField('Color-Scheme', choices = [(2,'Geographical'),(3,'Heatmap'),(4,'White')], coerce= int,validators=[DataRequired()])
+    # TODO: offset und layerwidth als DecimalField
     offset = SelectField('Offset', choices = [(2,'Geographical'),(3,'Heatmap'),(4,'White')], coerce= int,validators=[DataRequired()])
     layerwidth = SelectField('Layer-Width', choices = [(2,'Geographical'),(3,'Heatmap'),(4,'White')], coerce= int,validators=[DataRequired()])
     submit = SubmitField('Apply')
