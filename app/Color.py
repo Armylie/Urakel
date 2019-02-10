@@ -65,7 +65,6 @@ def color(inpath,outpath,texName,size = 1.63, offset = 0.15):
 if __name__ == "__main__":
     print(sys.argv[9])
     if sys.argv[9] == '0': # Färben ohne size und offset
-        print(sys.argv[6],sys.argv[7],sys.argv[8])
         color(sys.argv[6],sys.argv[7],sys.argv[8])
     else:
         color(sys.argv[6],sys.argv[7],sys.argv[8],float(sys.argv[10]),float(sys.argv[11]))

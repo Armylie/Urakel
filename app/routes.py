@@ -13,14 +13,17 @@ with open('C:\\Users\\Sara\\Desktop\\Neuer Ordner\\Urakel\\app\\paths.txt') as f
 
 # allgemeiner Pfad zum Zwischenspeichern von Dateien
 PATH = data.get('SAVEPATH')
-COLOURS = ['altitude scale', 'heatmap', 'white']
-ACTPATH =""
-matrixtype = 0
-colortype = 0
-experience = 0
-COLORFILE = ""
 UTEX = "UmatrixTexture"
 PTEX = "PmatrixTexture"
+# verwendete Variablen, werden an entsprechender Stelle überschrieben
+ACTPATH =""
+COLORFILE = ""
+matrixtype = 0
+colortype = 0
+colorparams = False
+offset = 0.15 # TODO: andere Defaultwerte auch in Color.py
+layerwidth = 1.63  # TODO: andere Defaultwerte auch in Color.py
+experience = 0
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -66,7 +69,50 @@ def index():
 
 @app.route('/colormodify', methods=['GET', 'POST'])
 def colormodify():
-    return render_template('colormodify.html', title='U-Matrix', colours=COLOURS)
+    global colortype, colorparams, layerwidth, offset, matrixtype
+
+    form = ColorForm()
+    # neue Wert abspeichern
+    if form.validate_on_submit():
+        layerwidth = form.layerwidth.data
+        offset = form.offset.data
+        if form.colorscheme.data == 4: # wenn political
+            colortype = 3
+        elif form.colorscheme.data == 3: # heat-map
+            colortype = 2
+            matrixtype = 3
+        else: # geographical
+            colortype = 2
+            matrixtype = 2
+        colorparams = True
+
+    #Färbung
+    outpath = ACTPATH.replace('.stl', '.obj')
+    # politische Färbung
+    if colortype == 3:
+        Main.color_political([ACTPATH, outpath, COLORFILE])
+    # normale Färbung ohne Parameter
+    else:
+        # UMatrix
+        if matrixtype == 2:
+            if colorparams:
+                Main.color_geographic([ACTPATH,outpath,UTEX,'1',str(layerwidth),str(offset)])
+            else:
+                Main.color_geographic([ACTPATH, outpath, UTEX, '0'])
+        # PMatrix
+        else:
+            if colorparams:
+                Main.color_geographic([ACTPATH,outpath,PTEX,'1',str(layerwidth),str(offset)])
+            else:
+                Main.color_geographic([ACTPATH, outpath, PTEX, '0'])
+
+    # Anzeige der bisherigen Werte
+    form.offset.data = offset
+    form.layerwidth.data = layerwidth
+    if colortype == 3: #political
+        form.colorscheme.data = 4
+    else: form.colorscheme.data = matrixtype
+    return render_template('colormodify.html', title='Color', form = form)
 
 
 @app.route('/saveandexport', methods=['GET', 'POST'])
@@ -85,7 +131,6 @@ def render_3d():
 def scale():
     form = ScaleForm()
     if form.validate_on_submit():
-        print(ACTPATH)
         Main.scale([ACTPATH,ACTPATH,'0',str(form.x.data),str(form.y.data),str(form.z.data)])
         return render_template('scale.html', title='Scale and Save', form=form)
     dims = Main.scale([ACTPATH, ACTPATH, '1'])
