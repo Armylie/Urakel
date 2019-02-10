@@ -4,9 +4,6 @@
 import sys
 import bpy
 
-inpath = "C:\\Users\\Sara\\Desktop\\Upload\\UStar.stl"
-outpath = "C:\\Users\\Sara\\Desktop\\Upload\\UTrans.obj"
-
 # import stl
 def initialize(inpath):
     bpy.ops.object.select_all(action='TOGGLE')
@@ -41,7 +38,8 @@ def mapAndExport(outpath):
     bpy.ops.object.mode_set(mode='OBJECT')
     # erstelle und verlinke image (-> später höhere Auflösung?)
     image = bpy.data.images.new(name="UTrans", width=1000, height=1000)
-    for uv_face in bpy.data.objects.get("UStar").data.uv_textures.active.data:
+    # TODO: Name automatisch finden
+    for uv_face in bpy.data.objects.get("UStar trans").data.uv_textures.active.data:
         uv_face.image = image
     # Rückkehr in Editmode
     bpy.ops.object.mode_set(mode='EDIT')
@@ -67,6 +65,7 @@ def color(inpath,outpath,texName,size = 1.63, offset = 0.15):
 if __name__ == "__main__":
     print(sys.argv[9])
     if sys.argv[9] == '0': # Färben ohne size und offset
+        print(sys.argv[6],sys.argv[7],sys.argv[8])
         color(sys.argv[6],sys.argv[7],sys.argv[8])
     else:
         color(sys.argv[6],sys.argv[7],sys.argv[8],float(sys.argv[10]),float(sys.argv[11]))

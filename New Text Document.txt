@@ -1,10 +1,19 @@
 
-Wartekreis ins Frontend
+Pfad zu paths.txt √§ndern in :
+Main.py
+routes.py
+scale.py
 
-Verh‰ltnis-Funktion-Frontend-Anpassung(Scale) - Update Javascript
-Formular-Werte-‹bermittlung - :)
+Pfade in paths.txt √§ndern
 
-Easy-Expert Slider
-U/P-Matrix Button als Dropdown
-Dropdown Politische F‰rbung
-Auswahl Politisch/NichtPolitisch ins Frontend
+
+
+
+
+pers√∂nliche Pfade:
+Sara:
+'C:\\Users\\Sara\\Desktop\\Neuer Ordner\\Urakel\\app\\paths.txt'
+{"SAVEPATH": "C:\\Users\\Sara\\Desktop\\Upload",
+"BLENDERPATH": "C:\\Program Files\\Blender Foundation\\Blender",
+"TEXTUREPATH": "C:\\Users\\Sara\\Desktop\\Upload\\Texturierungsumgebung2.blend"
+}
