@@ -13,9 +13,6 @@ class FileForm(FlaskForm):
     experience = SelectField('Settings?', choices = [(2,'Easy-Mode'),(3,'Expert-Mode')], coerce= int,validators=[DataRequired()])
     submit = SubmitField('Next')
 
-# TODO: Input U-Matrix oder P-Matrix über Form (evtl. RadioButton)
-class UPForm(FlaskForm):
-    choice = RadioField(choices = ['U-Matrix','P-Matrix'])
 
 class ScaleForm(FlaskForm):
     x = DecimalField(validators = [DataRequired()], id='xvalue')
@@ -25,9 +22,7 @@ class ScaleForm(FlaskForm):
     submit = SubmitField('Apply')
 
 class ColorForm(FlaskForm):
-    # TODO: replace White mit Political
-    colorscheme = SelectField('Color-Scheme', choices = [(2,'Geographical'),(3,'Heatmap'),(4,'White')], coerce= int,validators=[DataRequired()])
-    # TODO: offset und layerwidth als DecimalField
-    offset = SelectField('Offset', choices = [(2,'Geographical'),(3,'Heatmap'),(4,'White')], coerce= int,validators=[DataRequired()])
-    layerwidth = SelectField('Layer-Width', choices = [(2,'Geographical'),(3,'Heatmap'),(4,'White')], coerce= int,validators=[DataRequired()])
+    colorscheme = SelectField('Color-Scheme', choices = [(2,'Geographical'),(3,'Heatmap'),(4,'Political')], coerce= int,validators=[DataRequired()], id ='colorschemevalue')
+    offset =  DecimalField(validators = [DataRequired()], id='offsetvalue')
+    layerwidth =  DecimalField(validators = [DataRequired()], id='layervalue')
     submit = SubmitField('Apply')

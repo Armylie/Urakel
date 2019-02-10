@@ -64,14 +64,9 @@ def index():
     return render_template('index.html', title='Home', form=form)
 
 
-@app.route('/umatrixmodify', methods=['GET', 'POST'])
-def umatrixmodify():
-    return render_template('umatrixmodify.html', title='U-Matrix', colours=COLOURS)
-
-
-@app.route('/pmatrixmodify', methods=['GET', 'POST'])
-def pmatrixmodify():
-    return render_template('pmatrixmodify.html', title='P-Matrix', colours=COLOURS)
+@app.route('/colormodify', methods=['GET', 'POST'])
+def colormodify():
+    return render_template('colormodify.html', title='U-Matrix', colours=COLOURS)
 
 
 @app.route('/saveandexport', methods=['GET', 'POST'])
