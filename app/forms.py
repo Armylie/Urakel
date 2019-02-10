@@ -2,6 +2,8 @@ from flask_wtf import FlaskForm
 from wtforms import SubmitField, FileField, SelectField, RadioField, DecimalField
 from wtforms.validators import DataRequired
 
+# TODO: bei den SelectFields bei denen keine Zahlen zur weiteren verarbeitung genutzt werden, kein verwenden von zahlen
+# -> würde code in routes.py besser verständlich machen
 
 class FileForm(FlaskForm):
     file = FileField(validators=[DataRequired('no File found')])

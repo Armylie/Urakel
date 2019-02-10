@@ -4,6 +4,8 @@
 import sys
 import bpy
 
+# TODO: Anleitung nochmal durchgehen, was wurde vergessen? Färbung ist nämlich zu dunkel grad
+
 # import stl
 def initialize(inpath):
     bpy.ops.object.select_all(action='TOGGLE')

@@ -10,7 +10,7 @@ def initialize(inpath):
     bpy.ops.import_mesh.stl(filepath=inpath)
 
 # Erstellung der Materialien für insgesamt 8 mögliche Klassen (+ Randfarbe)
-# TODO: schönere Farben auswählen
+# TODO: schönere Farben auswählen, was ist mit mehr als 8 Klassen?
 def create_mats():
     color = [(0,0,1),(0,1,0),(1,0,0),(1,1,0),(1,0,1),(0,1,1),(1,1,0.5),(1,0.5,1),(0.5,1,1)]
 
@@ -72,7 +72,6 @@ def colorOne(island, i,div):
     bpy.ops.object.editmode_toggle()
 
 # Färbe die Cluster ein
-# TODO: Methode für andere(unbekannte) Clusterzahlen
 def colorAll(island,classes,div):
     colorOne(island,0,div)
     for i in range(2,classes+2): # Beispiel: es gibt 4 Klassen -> range(2,6) = 2,3,4,5

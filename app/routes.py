@@ -41,7 +41,6 @@ def index():
         matrixtype = form.matrixtype.data
         colortype = form.colortype.data
         experience = form.experience.data
-
         # COLORFILE speichern
         if form.colorfile.data.filename != "":
             COLORFILE = os.path.join(PATH, form.colorfile.data.filename)
@@ -137,5 +136,4 @@ def scale():
     form.x.data = dims[0]
     form.y.data = dims[1]
     form.z.data = dims[2]
-    # TODO: über next richtige Weiterleitung entsprechend bei Start gewählter Parameter
     return render_template('scale.html', title='Scale and Save', form = form)
