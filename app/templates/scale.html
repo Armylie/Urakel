@@ -9,19 +9,32 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
-        var xold = document.getElementById("xvalue").value
-        var yold = document.getElementById("yvalue").value
+        var xratio = (document.getElementById("xvalue").value/document.getElementById("yvalue").value)
+        var yratio = (document.getElementById("yvalue").value/document.getElementById("xvalue").value)
         
-        document.getElementById("xvalue").onkeyup = function () {
+        document.getElementById("lockbutton").onclick = function(){
+            xratio = (document.getElementById("xvalue").value/document.getElementById("yvalue").value)
+            yratio = (document.getElementById("yvalue").value/document.getElementById("xvalue").value)
+        }
+
+        document.getElementById("xvalue").onactivate = function(){
+            xratio = (document.getElementById("xvalue").value/document.getElementById("yvalue").value)
+            yratio = (document.getElementById("yvalue").value/document.getElementById("xvalue").value)
+        }
+        document.getElementById("yvalue").onactivate = function(){
+            xratio = (document.getElementById("xvalue").value/document.getElementById("yvalue").value)
+            yratio = (document.getElementById("yvalue").value/document.getElementById("xvalue").value)
+        }
+
+        document.getElementById("xvalue").onchange = function () {
             if (document.getElementById("lockbutton").checked) {
-            document.getElementById("yvalue").value = document.getElementById("yvalue").value*(document.getElementById("xvalue").value/xold)
-            xold = document.getElementById("xvalue").value
+            document.getElementById("yvalue").value = document.getElementById("xvalue").value*yratio
         }
         }
-        document.getElementById("yvalue").onkeyup = function () {
+        document.getElementById("yvalue").onchange = function () {
             if (document.getElementById("lockbutton").checked) {
-            document.getElementById("xvalue").value = document.getElementById("xvalue").value*(document.getElementById("yvalue").value/yold)
-            yold = document.getElementById("yvalue").value
+                document.getElementById("xvalue").value = document.getElementById("yvalue").value*xratio
+            
         }
         }
           
@@ -60,7 +73,6 @@
                                     <span class="glyphicon glyphicon-lock"><input type="checkbox" id="lockbutton"><br></span>
                                     <br>
                                     <br>
-                                    Unit: {{ form.unit }}&nbsp;&nbsp;
                                     {{ form.submit(class_="btn btn-info btn-lg") }}
                                 </h4>
                             </form>

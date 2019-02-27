@@ -13,29 +13,10 @@
         });
     </script>
     <script>
-        function myFunction() {
-            document.getElementById("Vorschaubild").src="/render"; // .src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9GYHbaEb7UKc2O9nQFWuPDnFWPUic9cuVfIPbN4fn6iuMRr7OMg"
-            document.getElementById("Vorschaubild").style.display = "block";
-            document.getElementById("welcome_text").style.display = "none";
-        }
-    </script>
-    <script>
-        function myFunction2() {
-            document.getElementById("Vorschaubild").src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0mbKpx_wSoF_xENtDVDoW97Xlrrz8ji08yTdk_jxaLDaTcKH1";
-            document.getElementById("Vorschaubild").style.display = "block";
-            document.getElementById("welcome_text").style.display = "none";
-        }
-    </script>
-    <script>
-        function myFunction3() {
-            document.getElementById("EasyExpert").innerHTML = "<button class='btn btn-primary btn-lg' onclick='myFunction4()'>Expert-Mode?</button>";
-        }
-    </script>
-        <script>
-            function myFunction4() {
-                document.getElementById("EasyExpert").innerHTML = "<button class='btn btn-primary btn-lg' onclick='myFunction3()'>Easy-Mode?</button>";
+        document.getElementById("submitfield").onclick = function(){
+            window.alert("Depending on your settings the processing could take a few seconds up to a few minutes. Please wait patiently");
             }
-        </script>
+    </script>
     {{ super() }}
 {% endblock %}
 {% block title %}PrUnt - a software by Urakel{% endblock %}
