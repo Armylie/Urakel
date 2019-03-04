@@ -32,48 +32,19 @@
     <div class="row">
         <div class="col-lg-6">
             <div class="contentpane">
-                <div class="row">
-                    <div class="col-lg-1">
-                        <div class="emptyspace">.</div>
-                    </div>
-                    <div class="col-lg-2">
-                            <div class="emptyspace"></div>
-                    </div>
-                    <div class="col-lg-9">
-                        <div class="emptyspace">.</div>
-                    </div>
-                </div>
-                <div class="row">
-                </div>
-                <div class="row">
-                    <div class="col-lg-1">
-                        <div class="emptyspace">.</div>
-                    </div>
-                    <div class="col-lg-2">
-                        <div class="emptyspace"></div>
-                    </div>
-                    <div class="col-lg-9">
-                        <div class="emptyspace">.</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="emptyspace">EmptySpace</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-1">
-                        <div class="emptyspace">.</div>
-                    </div>
-                </div>
+                <br>
+                <br>
+                <br>
+                <br>
                 <div class="row">
                     <div class="col-lg-2">
                         <div class="emptyspace">.</div>
                     </div>
                     <div class="col-lg-6">
-                            <form method="POST" action="export">
-                                    <input type="submit" value="Export" />
-                            </form>
+                            <form action="" method="post">
+                            {{ form.hidden_tag() }}
+                            {{ form.submit(class_="btn btn-info btn-lg") }}
+                        </form>
                      </div>
                 </div>
             </div>

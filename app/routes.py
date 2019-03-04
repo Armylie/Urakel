@@ -3,8 +3,9 @@ import os
 from flask import flash, redirect, render_template, url_for
 
 from app import Main, app
-from app.forms import FileForm, ScaleForm, ColorForm
+from app.forms import FileForm, ScaleForm, ColorForm, ExportForm
 
+os.mkdir(__file__.replace('routes.py', 'Temp')) # erstelle Ordner zum Zwischenspeichern
 
 # Namen der Texturen
 UTEX = "UmatrixTexture"
@@ -107,9 +108,16 @@ def colormodify():
 
 @app.route('/saveandexport', methods=['GET', 'POST'])
 def saveandexport():
-    # TODO: save final files at given path
-    # TODO: delete all other files -> files in Temp
-    return render_template('saveandexport.html', title='Save and Export')
+    form = ExportForm()
+    if form.validate_on_submit():
+        # TODO: save final files at given path
+
+        # lösche alle Dateien in Temp und Temp selbst
+        for i in os.listdir(__file__.replace('routes.py', 'Temp')):
+            os.remove(os.path.join(__file__.replace('routes.py', 'Temp'), i))
+        os.rmdir(__file__.replace('routes.py', 'Temp'))
+
+    return render_template('saveandexport.html', title='Save and Export',form = form)
 
 @app.route('/popup')
 def user_popup():

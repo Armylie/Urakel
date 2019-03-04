@@ -26,3 +26,6 @@ class ColorForm(FlaskForm):
     layerwidth =  DecimalField(validators = [DataRequired()], id='layervalue')
     colorfile = FileField()
     submit = SubmitField('Apply')
+
+class ExportForm(FlaskForm):
+    submit = SubmitField('Export')
