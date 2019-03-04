@@ -2,8 +2,7 @@ import os
 import csv
 
 # öffnen der 'Datenbank'
-# TODO: öffnen über relativen Pfad
-with open('C:\\Users\\Sara\\Desktop\\Neuer Ordner\\Urakel\\app\\paths.txt') as file:
+with open(__file__.replace('Main.py','paths.txt')) as file:
     data = eval(file.read())
 
 # Pfade welche vom User am Anfang abgefragt werden (oder bei Installation des Programms gesetzt werden)
@@ -53,7 +52,7 @@ def color_geographic(arguments):
     os.system("blender --background " + texpath + " --python " + colorpath + " -- " + argument_string)
 
 
-# Reihenfolge der Übergebenen Argumente: inpath outpath islandpath
+# Reihenfolge der Übergebenen Argumente: inpath outpath islandpath div
 # wichtig: outpath = inpath.replace('.stl', '_trans.obj')
 def color_political(arguments):
     argument_string = " ".join(arguments)

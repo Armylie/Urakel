@@ -40,7 +40,7 @@ def mapAndExport(outpath):
     bpy.ops.object.mode_set(mode='OBJECT')
     # erstelle und verlinke image (-> später höhere Auflösung?)
     image = bpy.data.images.new(name="UTrans", width=1000, height=1000)
-    # TODO: Name automatisch finden
+    # TODO: Name automatisch finden (oder an allen Stellen zum speichern gleichen Namen verwenden)
     for uv_face in bpy.data.objects.get("UStar trans").data.uv_textures.active.data:
         uv_face.image = image
     # Rückkehr in Editmode
