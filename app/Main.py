@@ -7,7 +7,7 @@ with open(__file__.replace('Main.py','paths.txt')) as file:
 
 # Pfade welche vom User am Anfang abgefragt werden (oder bei Installation des Programms gesetzt werden)
 blenderpath = data.get('BLENDERPATH')
-texpath = data.get('TEXTUREPATH')
+texpath = __file__.replace('Main.py','Texturierungsumgebung.blend')
 
 # Pfade für entsprechende Pythondateien öffnen, in richtigem Format um durch Blender genutzt zu werden
 trafopath = "\"" + __file__.replace('Main', 'Trafo').replace('/', '\\') + "\""

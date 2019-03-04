@@ -1,3 +1,1 @@
-{"BLENDERPATH": "C:\\Program Files\\Blender Foundation\\Blender",
-"TEXTUREPATH": "C:\\Users\\Sara\\Desktop\\Upload\\Texturierungsumgebung2.blend"
-}
+{"BLENDERPATH": "C:\\Program Files\\Blender Foundation\\Blender"}

@@ -5,11 +5,6 @@ from flask import flash, redirect, render_template, url_for
 from app import Main, app
 from app.forms import FileForm, ScaleForm, ColorForm
 
-# öffnen der 'Datenbank'
-# TODO: TEXTUREPATH aus Datenbank rausschmeißen? (nur Blenderpath nötig?)
-with open(__file__.replace('routes.py','paths.txt')) as file:
-    data = eval(file.read())
-
 
 # Namen der Texturen
 UTEX = "UmatrixTexture"

@@ -2,12 +2,10 @@
 Es kann zu Problemen kommen, falls das Programm in einem Ordner mit Leerzeichen gespeichert wurde. 
 
 
-Pfade in paths.txt ändern
+Pfad für Blender in paths.txt ändern
+
+
 
 persönliche Pfade:
 Sara:
-'C:\\Users\\Sara\\Desktop\\Neuer Ordner\\Urakel\\app\\paths.txt'
-{"SAVEPATH": "C:\\Users\\Sara\\Desktop\\Upload",
-"BLENDERPATH": "C:\\Program Files\\Blender Foundation\\Blender",
-"TEXTUREPATH": "C:\\Users\\Sara\\Desktop\\Upload\\Texturierungsumgebung2.blend"
-}
+{"BLENDERPATH": "C:\\Program Files\\Blender Foundation\\Blender"}
