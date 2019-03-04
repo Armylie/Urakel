@@ -1,14 +1,8 @@
 
-Pfad zu paths.txt ändern in :
-Main.py
-routes.py
-scale.py
+Es kann zu Problemen kommen, falls das Programm in einem Ordner mit Leerzeichen gespeichert wurde. 
+
 
 Pfade in paths.txt ändern
-
-
-
-
 
 persönliche Pfade:
 Sara:

@@ -26,7 +26,6 @@ def initColor(texName):
     bpy.context.object.active_material.texture_slots[0].mapping_y = 'Z'
 
 
-# TODO: size = new size - old size?
 # Bodenfärbung anpassen
 def setSizeAndOffset (size,offset):
     bpy.context.object.active_material.texture_slots[0].scale[1] = size
@@ -39,9 +38,8 @@ def mapAndExport(outpath):
     # stelle sicher, dass nicht in Editmode
     bpy.ops.object.mode_set(mode='OBJECT')
     # erstelle und verlinke image (-> später höhere Auflösung?)
-    image = bpy.data.images.new(name="UTrans", width=1000, height=1000)
-    # TODO: Name automatisch finden (oder an allen Stellen zum speichern gleichen Namen verwenden)
-    for uv_face in bpy.data.objects.get("UStar trans").data.uv_textures.active.data:
+    image = bpy.data.images.new(name="Matrix", width=1000, height=1000)
+    for uv_face in bpy.data.objects.get("Matrix").data.uv_textures.active.data:
         uv_face.image = image
     # Rückkehr in Editmode
     bpy.ops.object.mode_set(mode='EDIT')
@@ -49,15 +47,15 @@ def mapAndExport(outpath):
     #bake
     bpy.ops.object.bake_image()
     # save image
-    bpy.data.images['UTrans'].filepath_raw = "C:\\Users\\Sara\\Desktop\\Upload\\UTrans.png"
-    bpy.data.images['UTrans'].file_format = 'PNG'
-    bpy.data.images['UTrans'].save()
+    bpy.data.images['Matrix'].filepath_raw = __file__.replace('Color.py','Temp\\Matrix.png')
+    bpy.data.images['Matrix'].file_format = 'PNG'
+    bpy.data.images['Matrix'].save()
     # save object
     bpy.ops.export_scene.obj(filepath = outpath,path_mode='ABSOLUTE')
 
 
 # vollständige Färbung
-def color(inpath,outpath,texName,size = 1.63, offset = 0.15):
+def color(inpath,outpath,texName,size,offset):
     initialize(inpath)
     initColor(texName)
     setSizeAndOffset(size,offset)
@@ -65,8 +63,4 @@ def color(inpath,outpath,texName,size = 1.63, offset = 0.15):
 
 
 if __name__ == "__main__":
-    print(sys.argv[9])
-    if sys.argv[9] == '0': # Färben ohne size und offset
-        color(sys.argv[6],sys.argv[7],sys.argv[8])
-    else:
-        color(sys.argv[6],sys.argv[7],sys.argv[8],float(sys.argv[10]),float(sys.argv[11]))
+    color(sys.argv[6],sys.argv[7],sys.argv[8],float(sys.argv[9]),float(sys.argv[10]))

@@ -4,12 +4,6 @@ import bpy # Fehler kann erstmal ignoriert werden, löst sich zur Laufzeit
 import csv
 import sys
 
-# öffnen der 'Datenbank'
-with open(__file__.replace('Scale.py','paths.txt')) as file:
-    data = eval(file.read())
-
-# Pfade welche vom User am Anfang abgefragt werden (oder bei Installation des Programms gesetzt werden)
-savepath = data.get('SAVEPATH')
 
 # Initialisierung -> klären der Arbeitsoberfläche und Laden der in inpath gespeicherten Datei
 def initialize(inpath):
@@ -40,7 +34,7 @@ if __name__ == "__main__":
         changeDim(float(sys.argv[8]),float(sys.argv[9]),float(sys.argv[10]))
     elif sys.argv[7] == '1':
         # Speichern der X,Y,Z Werte in csv Datei zur späteren Weiterverarbeitung
-        with open(savepath+'\\dim.csv','w') as file:
+        with open(__file__.replace('Scale.py','Temp\\dim.csv'),'w') as file:
             csv.writer(file).writerow(getValues())
     # Speichern der geänderten Datei
     bpy.ops.export_mesh.stl(filepath=sys.argv[6])
