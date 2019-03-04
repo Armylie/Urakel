@@ -24,7 +24,6 @@ def buildbase(height):
     bpy.ops.transform.translate(value=(0, 0, -height))
 
 # vollständige Transformation
-# TODO: Wert für numsmooth
 def transform(inpath,outpath,numdiv = 2, numsmooth = 2, height = 5):
     initialize(inpath)
     smooth(numdiv,numsmooth)

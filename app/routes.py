@@ -6,8 +6,8 @@ from app import Main, app
 from app.forms import FileForm, ScaleForm, ColorForm
 
 # öffnen der 'Datenbank'
-# TODO: öffnen über relativen Pfad
-with open('C:\\Users\\Sara\\Desktop\\Neuer Ordner\\Urakel\\app\\paths.txt') as file:
+# TODO: SAVEPATH und TEXTUREPATH aus Datenbank rausschmeißen? (nur Blenderpath nötig?)
+with open(__file__.replace('routes.py','paths.txt')) as file:
     data = eval(file.read())
 
 
@@ -16,7 +16,7 @@ PATH = data.get('SAVEPATH')
 UTEX = "UmatrixTexture"
 PTEX = "PmatrixTexture"
 # verwendete Variablen, werden an entsprechender Stelle überschrieben
-ACTPATH =""
+ACTPATH ="" # TODO: nutze zum Zwischenspeichern festen Namen (unabhängig von Namen der Eingabedatei)
 COLORFILE = ""
 matrixtype = 0
 colortype = 0
@@ -24,24 +24,28 @@ colorparams = False
 offset = 0.15 # TODO: andere Defaultwerte auch in Color.py
 layerwidth = 1.63  # TODO: andere Defaultwerte auch in Color.py
 experience = 0
+quali = ""
 
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    global ACTPATH, matrixtype, colortype, experience, COLORFILE
+    global ACTPATH, matrixtype, colortype, experience, COLORFILE, quali
     form = FileForm()
     if form.validate_on_submit():
         name = form.file.data.filename
         inpath = os.path.join(PATH, name)
         form.file.data.save(inpath) # Zwischenspeichern der Datei
         outpath = inpath.replace('.stl', '_trans.stl')
-        Main.trans([inpath, outpath, str(form.quality.data)])
+        quali = str(form.quality.data)
+        Main.trans([inpath, outpath, quali])
         ACTPATH = outpath # so kann später mit diesem Ergebnis weiter gearbeitet werden
         matrixtype = form.matrixtype.data
         colortype = form.colortype.data
         experience = form.experience.data
         # COLORFILE speichern
+        #TODO: Abfrage funktioniert so nicht??
+        # if colortype == 3:
         if form.colorfile.data.filename != "":
             COLORFILE = os.path.join(PATH, form.colorfile.data.filename)
 
@@ -50,7 +54,7 @@ def index():
             outpath = ACTPATH.replace('.stl', '.obj')
             # politische Färbung
             if colortype == 3:
-                Main.color_political([ACTPATH,outpath,COLORFILE])
+                Main.color_political([ACTPATH,outpath,COLORFILE,quali])
             # normale Färbung ohne Parameter
             else:
                 # UMatrix
@@ -68,7 +72,7 @@ def index():
 
 @app.route('/colormodify', methods=['GET', 'POST'])
 def colormodify():
-    global colortype, colorparams, layerwidth, offset, matrixtype
+    global colortype, colorparams, layerwidth, offset, matrixtype, quali
 
     form = ColorForm()
     # neue Wert abspeichern
@@ -89,7 +93,7 @@ def colormodify():
     outpath = ACTPATH.replace('.stl', '.obj')
     # politische Färbung
     if colortype == 3:
-        Main.color_political([ACTPATH, outpath, COLORFILE])
+        Main.color_political([ACTPATH, outpath, COLORFILE,quali])
     # normale Färbung ohne Parameter
     else:
         # UMatrix
@@ -116,6 +120,8 @@ def colormodify():
 
 @app.route('/saveandexport', methods=['GET', 'POST'])
 def saveandexport():
+    # TODO: save final files at given path
+    # TODO: delete all other files
     return render_template('saveandexport.html', title='Save and Export')
 
 @app.route('/popup')

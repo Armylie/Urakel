@@ -5,8 +5,7 @@ import csv
 import sys
 
 # öffnen der 'Datenbank'
-# TODO: öffnen über relativen Pfad
-with open('C:\\Users\\Sara\\Desktop\\Neuer Ordner\\Urakel\\app\\paths.txt') as file:
+with open(__file__.replace('Scale.py','paths.txt')) as file:
     data = eval(file.read())
 
 # Pfade welche vom User am Anfang abgefragt werden (oder bei Installation des Programms gesetzt werden)

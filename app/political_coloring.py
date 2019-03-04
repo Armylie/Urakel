@@ -78,7 +78,6 @@ def colorAll(island,classes,div):
         colorOne(island,i,div)
 
 
-# TODO: div aus Frontend
 def color(inpath,outpath,islandpath,div=1):
     island = np.genfromtxt(islandpath, dtype=int)
     classes = island.max() -1 # Klassenanzahl
@@ -90,7 +89,7 @@ def color(inpath,outpath,islandpath,div=1):
 
 
 if __name__ == "__main__":
-    color(sys.argv[5],sys.argv[6],sys.argv[7])
+    color(sys.argv[5],sys.argv[6],sys.argv[7],int(sys.argv[8]))
 
 
 

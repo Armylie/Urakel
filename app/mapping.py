@@ -57,7 +57,6 @@ def cutIsland(island):
     return island
 
 # fülle die Insel mit Klassenbezeichnungen auf
-# TODO? auffüllen nicht optimal -> unschöne Ränder, teilweise Fehlklassifizierung, -> wollen eigentlich passende Datei vom User (Ultsch) haben
 def fillCluster(island):
     island2 = island.copy()
     # klassifiziere direkten Kreis um klassifizierten Punkt -> für bessere Verbundenheit von Klassen
