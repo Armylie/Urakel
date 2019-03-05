@@ -1,11 +1,25 @@
 import os
-
-from flask import flash, redirect, render_template, url_for
-
+import zipfile
+from flask import flash, redirect, render_template, url_for, send_from_directory
 from app import Main, app
 from app.forms import FileForm, ScaleForm, ColorForm, ExportForm
 
-os.mkdir(__file__.replace('routes.py', 'Temp')) # erstelle Ordner zum Zwischenspeichern
+# TODO: rufe clearTemp() auf, wenn zurück auf Startseite gewechselt wird
+def clearTemp():
+    # lösche alle Dateien in Temp
+    for i in os.listdir(__file__.replace('routes.py', 'Temp')):
+        os.remove(os.path.join(__file__.replace('routes.py', 'Temp'), i))
+
+# erstelle Ordner zum Zwischenspeichern, falls dieser noch nicht existiert, sonst stelle sicher, dass dieser leer ist
+if not os.path.isdir(__file__.replace('routes.py', 'Temp')):
+    os.mkdir(__file__.replace('routes.py', 'Temp'))
+else:
+    clearTemp()
+
+# Zip File aus möglichem vorherigen Programmaufruf löschen
+# TODO: am Ende des Programms löschen, oder wir verkaufen das als Feature (Backup, falls nicht richtig gespeichert wurdde oder so)
+if os.path.isfile(__file__.replace('routes.py', 'Temp.zip')):
+    os.remove(__file__.replace('routes.py', 'Temp.zip'))
 
 # Namen der Texturen
 UTEX = "UmatrixTexture"
@@ -13,7 +27,7 @@ PTEX  = "PmatrixTexture"
 
 # Pfade für .stl Datei der Matrix und ggf. Mapping zur politischen Färbung
 MATPATH =__file__.replace('routes.py', 'Temp\\Matrix.stl')
-COLORPATH = __file__.replace('routes.py', 'Temp\\Matrix.txt')
+COLORPATH = __file__.replace('routes.py', 'Temp\\Island.txt')
 
 # vom Nutzer gewählte Parameter zur weiteren Verarbeitung der Matrix
 matrixtype, colortype, experience, quali = "","","",""
@@ -30,9 +44,8 @@ def index():
     form = FileForm()
     if form.validate_on_submit():
         form.file.data.save(MATPATH) # Zwischenspeichern der .stl Datei der Matrix
-
         quali = str(form.quality.data)
-
+        print(form.file.object_data)
         matrixtype = form.matrixtype.data
         colortype = form.colortype.data
         experience = form.experience.data
@@ -110,12 +123,16 @@ def colormodify():
 def saveandexport():
     form = ExportForm()
     if form.validate_on_submit():
-        # TODO: save final files at given path
-
-        # lösche alle Dateien in Temp und Temp selbst
+        # erstelle Zip Ordner mit allen finalen Dateien
+        zipper = zipfile.ZipFile(__file__.replace('routes.py', 'Temp.zip'), 'a')
         for i in os.listdir(__file__.replace('routes.py', 'Temp')):
-            os.remove(os.path.join(__file__.replace('routes.py', 'Temp'), i))
-        os.rmdir(__file__.replace('routes.py', 'Temp'))
+            if i.startswith('Matrix'): # Speichere dim und Island nicht
+                zipper.write(os.path.join(__file__.replace('routes.py', 'Temp'), i), i, zipfile.ZIP_DEFLATED)
+        zipper.close()
+
+        clearTemp()
+
+        return send_from_directory(__file__.replace('routes.py', ''),'Temp.zip')
 
     return render_template('saveandexport.html', title='Save and Export',form = form)
 
@@ -138,3 +155,4 @@ def scale():
     form.y.data = dims[1]
     form.z.data = dims[2]
     return render_template('scale.html', title='Scale and Save', form = form)
+
