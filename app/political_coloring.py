@@ -10,9 +10,10 @@ def initialize(inpath):
     bpy.ops.import_mesh.stl(filepath=inpath)
 
 # Erstellung der Materialien für insgesamt 8 mögliche Klassen (+ Randfarbe)
-# TODO: schönere Farben auswählen, was ist mit mehr als 8 Klassen?
 def create_mats():
-    color = [(0,0,1),(0,1,0),(1,0,0),(1,1,0),(1,0,1),(0,1,1),(1,1,0.5),(1,0.5,1),(0.5,1,1)]
+    # Farben entstammen dem Farbschema tab10
+    color = [(0.12, 0.47, 0.71), (1.0, 0.5, 0.05), (0.17, 0.63, 0.17), (0.84, 0.15, 0.16), (0.58, 0.40, 0.74),
+             (0.89, 0.47, 0.76), (0.74, 0.74, 0.13),(0.09, 0.75, 0.81),(0.5,0.5,0.5)]
 
     for i in range(9):
         mat = bpy.data.materials.new('Material'+str(i))
@@ -74,7 +75,7 @@ def colorOne(island, i,div):
 # Färbe die Cluster ein
 def colorAll(island,classes,div):
     colorOne(island,0,div)
-    for i in range(2,classes+2): # Beispiel: es gibt 4 Klassen -> range(2,6) = 2,3,4,5
+    for i in range(2,classes+2): # Beispiel: es gibt 4 Klassen -> range(2,6) = 2,3,4,5 # TODO: Beginn ab 1?
         colorOne(island,i,div)
 
 
