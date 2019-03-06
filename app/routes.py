@@ -95,7 +95,7 @@ def index():
 
 @app.route('/colormodify', methods=['GET', 'POST'])
 def colormodify():
-    global colortype, layerwidth, offset, matrixtype, quali
+    global colortype, layerwidth, offset, matrixtype, quali, COLORPATH
     form = ColorForm()
 
     # neue Parameter abspeichern
@@ -115,7 +115,23 @@ def colormodify():
     outpath = MATPATH.replace('.stl', '.obj')
     # politische Färbung
     if colortype == 'polit':
-        Main.color_political([MATPATH, outpath, COLORPATH, quali])
+        # es wurde bereits eine Datei zur politischen Färbung hochgeladen
+        if os.path.isfile(COLORPATH):
+            # eine weitere Datei des richtigen Formats wurde hochgeladen -> update COLORFILE
+            if form.colorfile.data.filename.endswith('.txt'):
+                os.remove(COLORPATH)
+                form.colorfile.data.save(COLORPATH)
+            # führe Färbung durch
+            Main.color_political([MATPATH, outpath, COLORPATH, quali])
+        # keine alte Datei vorhanden, aber neue Datei
+        elif form.colorfile.data.filename.endswith('.txt'):
+            form.colorfile.data.save(COLORPATH)
+            # führe Färbung durch
+            Main.color_political([MATPATH, outpath, COLORPATH, quali])
+        else:
+            print("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'geographical' or 'heatmap'.")
+            # TODO: popup (vor Wartebildschirm)
+            return render_template('colormodify.html', title='Color', form=form)
     # normale Färbung, falls Parameter angegeben wurden mit diesen, sonst mit default Werten
     else:
         if matrixtype == 'UMatrix':
@@ -130,6 +146,7 @@ def colormodify():
         form.colorscheme.data = 'polit'
     else:
         form.colorscheme.data = matrixtype
+
     return render_template('colormodify.html', title='Color', form = form)
 
 
