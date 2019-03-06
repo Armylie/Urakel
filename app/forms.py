@@ -6,7 +6,7 @@ from wtforms.validators import DataRequired
 class FileForm(FlaskForm):
     file = FileField(validators=[DataRequired('no File found')])
     colorfile = FileField()
-    # TODO: Werte für low, medium, high anpassen
+    # TODO: Werte für low, medium, high anpassen (nach Skype)
     quality = SelectField('Quality', choices = [(1,'low'),(3,'medium'),(4,'high')], coerce= int,validators=[DataRequired()])
     matrixtype = SelectField('Matrix-Type', choices = [('UMatrix','U-Matrix'),('PMatrix','P-Matrix')], coerce= str,validators=[DataRequired()])
     colortype  = SelectField('Color-Type', choices = [('notpolit','Not Political'),('polit','Political')], coerce= str,validators=[DataRequired()])

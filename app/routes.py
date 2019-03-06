@@ -4,7 +4,7 @@ from flask import flash, redirect, render_template, url_for, send_from_directory
 from app import Main, app
 from app.forms import FileForm, ScaleForm, ColorForm, ExportForm
 
-# TODO: rufe clearTemp() auf, wenn zurück auf Startseite gewechselt wird
+# TODO: rufe clearTemp() auf, wenn zurück auf Startseite gewechselt wird (Benny?)
 def clearTemp():
     # lösche alle Dateien in Temp
     for i in os.listdir(__file__.replace('routes.py', 'Temp')):
@@ -17,7 +17,7 @@ else:
     clearTemp()
 
 # Zip File aus möglichem vorherigen Programmaufruf löschen
-# TODO: am Ende des Programms löschen, oder wir verkaufen das als Feature (Backup, falls nicht richtig gespeichert wurdde oder so)
+# TODO: am Ende des Programms löschen, oder wir verkaufen das als Feature (nach Skye)
 if os.path.isfile(__file__.replace('routes.py', 'Temp.zip')):
     os.remove(__file__.replace('routes.py', 'Temp.zip'))
 
@@ -32,15 +32,15 @@ COLORPATH = __file__.replace('routes.py', 'Temp\\Island.txt')
 # vom Nutzer gewählte Parameter zur weiteren Verarbeitung der Matrix
 matrixtype, colortype, experience, quali = "","","",""
 # Defaultwerte für offset und layerwidth, spätere Änderung vom Nutzer möglich
-offset = 0.15 # TODO: andere Defaultwerte?
-layerwidth = 1.63  # TODO: andere Defaultwerte?
+offset = 0.15 # TODO: andere Defaultwerte? (nach Skype)
+layerwidth = 1.63  # TODO: andere Defaultwerte? (nach Skype)
 
 
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    # TODO: unable dropdowns nach klicken auf next
+    # TODO: unable dropdowns nach klicken auf next (Benny?)
     global MATPATH, COLORPATH, matrixtype, colortype, experience, quali
     form = FileForm()
     if form.validate_on_submit():
@@ -61,7 +61,7 @@ def index():
                     form.colorfile.data.save(COLORPATH)
                 else:
                     print("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'not political'.")
-                    # TODO: popup (vor Wartebildschirm)
+                    # TODO: popup (vor Wartebildschirm) (Benny)
                     return render_template('index.html', title='Home', form=form)
 
             Main.trans([MATPATH, MATPATH, quali]) # Grundtransformation (glätten etc.) der Matrix
@@ -87,7 +87,7 @@ def index():
 
         else:
             print('Invalid file format. Please choose a .stl file.')
-            # TODO: popup (vor Wartebildschirm)
+            # TODO: popup (vor Wartebildschirm) (Benny)
             return render_template('index.html', title='Home', form=form)
 
     return render_template('index.html', title='Home', form=form)
@@ -130,7 +130,7 @@ def colormodify():
             Main.color_political([MATPATH, outpath, COLORPATH, quali])
         else:
             print("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'geographical' or 'heatmap'.")
-            # TODO: popup (vor Wartebildschirm)
+            # TODO: popup (vor Wartebildschirm) (Benny)
             return render_template('colormodify.html', title='Color', form=form)
     # normale Färbung, falls Parameter angegeben wurden mit diesen, sonst mit default Werten
     else:
@@ -150,6 +150,7 @@ def colormodify():
     return render_template('colormodify.html', title='Color', form = form)
 
 
+# TODO: zeige 3D Bild (Sara + Benny, nach Skype)
 @app.route('/saveandexport', methods=['GET', 'POST'])
 def saveandexport():
     form = ExportForm()
