@@ -4,6 +4,8 @@ from flask import flash, redirect, render_template, url_for, send_from_directory
 from app import Main, app
 from app.forms import FileForm, ScaleForm, ColorForm, ExportForm
 
+# TODO: Hilfetexte in ganzem Programm
+
 # TODO: rufe clearTemp() auf, wenn zurück auf Startseite gewechselt wird (Benny?)
 def clearTemp():
     # lösche alle Dateien in Temp
@@ -40,6 +42,7 @@ layerwidth = 1.63  # TODO: andere Defaultwerte? (nach Skype)
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
+    # TODO: Bilder einblenden je nach gewählter Aktion?
     # TODO: unable dropdowns nach klicken auf next (Benny?)
     global MATPATH, COLORPATH, matrixtype, colortype, experience, quali
     form = FileForm()

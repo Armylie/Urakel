@@ -32,5 +32,4 @@ def transform(inpath,outpath,numdiv = 2, numsmooth = 2, height = 5):
 
 
 if __name__ == "__main__":
-    # TODO: soll auch der smooth-Wert von der Qualität abhängen? (nach Skye)
     transform(sys.argv[5],sys.argv[6],numdiv = int (sys.argv[7]))

@@ -24,6 +24,7 @@ def create_mats():
 #wenn island[x,y] zu Klasse c gehört, färbe zwischen Knoten x, x+1 und y,y+1
 #wähle hier die Entsprechenden Polygone aus
 # div = 1
+# TODO: unsaubere Ränder, könnten aber okay sein
 def markPolygons(island,c,div):
     a = 0
     # ignoriere letzte Zeile/Spalte, da Mapping über Knoten, wir aber Knoten-1 vertexe haben
@@ -72,21 +73,26 @@ def colorOne(island, i,div):
     bpy.ops.mesh.select_all(action='TOGGLE')
     bpy.ops.object.editmode_toggle()
 
-# Färbe die Cluster ein
-def colorAll(island,classes,div):
-    colorOne(island,0,div)
-    for i in range(2,classes+2): # Beispiel: es gibt 4 Klassen -> range(2,6) = 2,3,4,5 # TODO: Beginn ab 1?
-        colorOne(island,i,div)
 
 
 def color(inpath,outpath,islandpath,div=1):
-    island = np.genfromtxt(islandpath, dtype=int)
-    classes = island.max() -1 # Klassenanzahl
+    island = np.genfromtxt(islandpath, dtype=int) # Textdatei als np array
+    classes = findNumbers(island)
     initialize(inpath)
     create_mats()
-    colorAll(island,classes,div)
+    # färbe alle Klassen ein
+    for i in classes:
+       colorOne(island,i,div)
     # exportiere Dateien (hier kein image benötigt, nur .obj und .mtl, da keine Textur verwendet wird)
     bpy.ops.export_scene.obj(filepath = outpath,path_mode='ABSOLUTE')
+
+
+def findNumbers (X):
+    c = []
+    for i in range(X.min(),X.max()+1):
+        if X.__contains__(i):
+            c.append(i)
+    return c
 
 
 if __name__ == "__main__":
