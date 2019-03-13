@@ -4,7 +4,6 @@
 import sys
 import bpy
 
-# TODO: Anleitung nochmal durchgehen, was wurde vergessen? Färbung ist nämlich zu dunkel grad
 
 # import stl
 def initialize(inpath):
@@ -38,9 +37,10 @@ def mapAndExport(outpath):
     # stelle sicher, dass nicht in Editmode
     bpy.ops.object.mode_set(mode='OBJECT')
     # erstelle und verlinke image (-> später höhere Auflösung?)
-    image = bpy.data.images.new(name="Matrix", width=1000, height=1000)
+    image = bpy.data.images.new(name="Matrix", width=10000, height=10000)
     for uv_face in bpy.data.objects.get("Matrix").data.uv_textures.active.data:
         uv_face.image = image
+    bpy.data.materials["newMaterial"].use_shadeless = True
     # Rückkehr in Editmode
     bpy.ops.object.mode_set(mode='EDIT')
     bpy.ops.mesh.select_all(action='SELECT') # Notwendig?

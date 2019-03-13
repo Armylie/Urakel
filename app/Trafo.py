@@ -18,16 +18,19 @@ def smooth(numdiv, numsmooth):
     bpy.ops.mesh.vertices_smooth(factor=0.5, repeat=numsmooth)
 
 # erstellt Boden der Höhe height
-def buildbase(height):
-    bpy.ops.mesh.extrude_region_move()
-    bpy.ops.transform.resize(value=(1, 1, 0))
-    bpy.ops.transform.translate(value=(0, 0, -height))
+def buildbase(height,dimz):
+    bpy.ops.mesh.extrude_region_move() # kopieren aller Punkte
+    bpy.ops.transform.resize(value=(1, 1, 0)) # verschieben der Kopien auf eine Ebene
+    bpy.ops.transform.translate(value=(0,0,-dimz/2)) # verschieben auf z = 0
+    bpy.ops.transform.translate(value=(0, 0, -height)) # erstellen des Bodens der Höhe height
 
 # vollständige Transformation
-def transform(inpath,outpath,numdiv = 2, numsmooth = 2, height = 5):
+# TODO: height anpassen -> welches Verhältnis zur Gesamthöhe? (bei Veränderung auch size und offset ändern)
+def transform(inpath,outpath,numdiv = 2, numsmooth = 2):
     initialize(inpath)
+    dimz = bpy.context.object.dimensions[2]
     smooth(numdiv,numsmooth)
-    buildbase(height)
+    buildbase(dimz/4,dimz)
     bpy.ops.export_mesh.stl(filepath=outpath)
 
 

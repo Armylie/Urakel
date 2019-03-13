@@ -19,7 +19,6 @@ else:
     clearTemp()
 
 # Zip File aus möglichem vorherigen Programmaufruf löschen
-# TODO: am Ende des Programms löschen, oder wir verkaufen das als Feature (nach Skye)
 if os.path.isfile(__file__.replace('routes.py', 'Temp.zip')):
     os.remove(__file__.replace('routes.py', 'Temp.zip'))
 
@@ -34,8 +33,8 @@ COLORPATH = __file__.replace('routes.py', 'Temp\\Island.txt')
 # vom Nutzer gewählte Parameter zur weiteren Verarbeitung der Matrix
 matrixtype, colortype, experience, quali = "","","",""
 # Defaultwerte für offset und layerwidth, spätere Änderung vom Nutzer möglich
-offset = 0.15 # TODO: andere Defaultwerte? (nach Skype)
-layerwidth = 1.63  # TODO: andere Defaultwerte? (nach Skype)
+offset = 0
+layerwidth = 1.7
 
 
 
