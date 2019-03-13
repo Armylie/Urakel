@@ -24,13 +24,13 @@ def create_mats():
 #wenn island[x,y] zu Klasse c gehört, färbe zwischen Knoten x, x+1 und y,y+1
 #wähle hier die Entsprechenden Polygone aus
 # div = 1
-# TODO: unsaubere Ränder, könnten aber okay sein
 def markPolygons(island,c,div):
     a = 0
     # ignoriere letzte Zeile/Spalte, da Mapping über Knoten, wir aber Knoten-1 vertexe haben
     for x in range(len(island)-1):
         for y in range(len(island[0])-1):
-            if island[x,y] == c:
+            if island[x,y] >= c: # erhalte sauberere (nicht blaue) Ränder durch Färben in Aufsteigender Reihenfolge
+                # jeweils zwei Dreiecke pro Punkt in mapping
                 bpy.context.active_object.data.polygons[a].select = True
                 bpy.context.active_object.data.polygons[a+1].select = True
             a = a + 2
@@ -45,7 +45,7 @@ def markPolygons2(island,c,a):
     for x in range(len(island)-1,0,-1):
         for y in range(len(island[0])-1,0,-1):
             for i in range(3):
-                if island[x, y] == c:
+                if island[x, y] >= c:
                     bpy.context.active_object.data.polygons[a].select = True
                     bpy.context.active_object.data.polygons[a+1].select = True
                 a = a + 2
@@ -53,18 +53,18 @@ def markPolygons2(island,c,a):
 
 
 # div = 3
-#TODO: passt noch nicht so ganz (Lücken in Füllung), aber könnte man so durchgehen lassen
 def markPolygons3(island,c,a):
     for x in range(len(island)-1):
         for y in range(len(island[0])-1):
             for i in range(9):
-                if island[x, y] == c:
+                if island[x, y] >= c:
                     bpy.context.active_object.data.polygons[a].select = True
                     bpy.context.active_object.data.polygons[a + 1].select = True
                 a = a + 2
+    markPolygons2(island,c,a)
 
 
-# Färbe ein Cluster i ein (Cluster 0 entspricht dem Rand)
+# Färbe Cluster i ein (Cluster 0 entspricht dem Rand)
 def colorOne(island, i,div):
     markPolygons(island, i,div)
     bpy.ops.object.editmode_toggle()
@@ -72,7 +72,6 @@ def colorOne(island, i,div):
     bpy.ops.object.material_slot_assign()
     bpy.ops.mesh.select_all(action='TOGGLE')
     bpy.ops.object.editmode_toggle()
-
 
 
 def color(inpath,outpath,islandpath,div=1):

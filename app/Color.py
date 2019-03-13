@@ -36,7 +36,7 @@ def mapAndExport(outpath):
     bpy.ops.uv.smart_project(island_margin=1)
     # stelle sicher, dass nicht in Editmode
     bpy.ops.object.mode_set(mode='OBJECT')
-    # erstelle und verlinke image (-> später höhere Auflösung?)
+    # erstelle und verlinke image (-> TODO: welche Auflösung?)
     image = bpy.data.images.new(name="Matrix", width=10000, height=10000)
     for uv_face in bpy.data.objects.get("Matrix").data.uv_textures.active.data:
         uv_face.image = image
