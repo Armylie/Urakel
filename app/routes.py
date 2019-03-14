@@ -4,9 +4,7 @@ from flask import flash, redirect, render_template, url_for, send_from_directory
 from app import Main, app
 from app.forms import FileForm, ScaleForm, ColorForm, ExportForm
 
-# TODO: Hilfetexte in ganzem Programm
 
-# TODO: rufe clearTemp() auf, wenn zurück auf Startseite gewechselt wird (Benny?)
 def clearTemp():
     # lösche alle Dateien in Temp
     for i in os.listdir(__file__.replace('routes.py', 'Temp')):
@@ -41,8 +39,9 @@ layerwidth = 1.7
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    # TODO: Bilder einblenden je nach gewählter Aktion?
-    # TODO: unable dropdowns nach klicken auf next (Benny?)
+    clearTemp()
+    # TODO: Bilder einblenden je nach gewählter Aktion? (Benny)
+    # TODO: unable dropdowns nach klicken auf next evtl. (Benny)
     global MATPATH, COLORPATH, matrixtype, colortype, experience, quali
     form = FileForm()
     if form.validate_on_submit():
@@ -132,7 +131,7 @@ def colormodify():
             Main.color_political([MATPATH, outpath, COLORPATH, quali])
         else:
             print("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'geographical' or 'heatmap'.")
-            # TODO: popup (vor Wartebildschirm) (Benny)
+            # TODO: popup (vor Wartebildschirm) (Beny)
             return render_template('colormodify.html', title='Color', form=form)
     # normale Färbung, falls Parameter angegeben wurden mit diesen, sonst mit default Werten
     else:
@@ -152,7 +151,7 @@ def colormodify():
     return render_template('colormodify.html', title='Color', form = form)
 
 
-# TODO: zeige 3D Bild (Sara + Benny, nach Skype)
+# TODO: passende Dateien für 3D Anzeige in Renderig Ordner ablegen
 @app.route('/saveandexport', methods=['GET', 'POST'])
 def saveandexport():
     form = ExportForm()
