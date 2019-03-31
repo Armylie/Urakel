@@ -14,7 +14,7 @@
     </script>
     <script>
         document.getElementById("submitfield").onclick = function(){
-            window.alert("Depending on your settings the processing could take a few seconds up to a few minutes. Please wait patiently");
+            window.alert("Depending on your settings the processing could take a few seconds up to a few minutes. Please wait patiently - Any changes you are applying to the previously set parameters won't affect the result of this run!");
             }
     </script>
     {{ super() }}
@@ -78,9 +78,13 @@
                             <div class="col-lg-5">
                                 <h4>
                                     <div data-trigger="hover" title="&nbsp;&nbsp;&nbsp;&nbsp;Information&emsp;"
-                                         data-content=" Low: For x to y RAM: Delivers a less smooth Matrix.
-                                    Medium: For x to y RAM: Delivers a smooth Matrix.
-                                    High: For x to y RAM: Delivers a super smooth Matrix.">
+                                         data-content=" 
+                                    Low needs at least:
+                                    32-bit dual core 2Ghz CPU; 2 GB RAM : Delivers a less smooth Matrix.
+                                    Medium needs around:
+                                    64-bit quad core CPU, 8 GB RAM: Delivers a smooth Matrix.
+                                    High needs around:
+                                    64-bit eight core CPU, 16 GB RAM: Delivers a super smooth Matrix.">
                                         <b><u> {{ form.quality.label }}</u></b>
                                         {{ form.quality() }}
                                         <span class="glyphicon glyphicon-info-sign"></span>
@@ -111,7 +115,6 @@
                 <div class="previewpane">
                     <div class="row">
                         <div class="col-lg-12">
-                            <center><iframe id="Vorschaubild"></iframe></center>
                             <div id=welcome_text>
                                 <h2>„Welcome to PrUnt!<br>
                                     <small>This is a software where you can generate a print-ready U-Matrix or P-Matrix
