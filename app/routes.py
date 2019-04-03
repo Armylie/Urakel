@@ -4,33 +4,33 @@ from flask import flash, redirect, render_template, url_for, send_from_directory
 from app import Main, app
 from app.forms import FileForm, ScaleForm, ColorForm, ExportForm
 
-
+# delete all files in Temp
 def clearTemp():
-    # lösche alle Dateien in Temp
     for i in os.listdir(__file__.replace('routes.py', 'Temp')):
         os.remove(os.path.join(__file__.replace('routes.py', 'Temp'), i))
 
-# erstelle Ordner zum Zwischenspeichern, falls dieser noch nicht existiert, sonst stelle sicher, dass dieser leer ist
+# if not already existing, generate directory for temporary storage
+# otherwise ensure that it is empty
 if not os.path.isdir(__file__.replace('routes.py', 'Temp')):
     os.mkdir(__file__.replace('routes.py', 'Temp'))
 else:
     clearTemp()
 
-# Zip File aus möglichem vorherigen Programmaufruf löschen
+# delete zipfile from a previous use of the program
 if os.path.isfile(__file__.replace('routes.py', 'Temp.zip')):
     os.remove(__file__.replace('routes.py', 'Temp.zip'))
 
-# Namen der Texturen
+# names of the textures
 UTEX = "UmatrixTexture"
 PTEX  = "PmatrixTexture"
 
-# Pfade für .stl Datei der Matrix und ggf. Mapping zur politischen Färbung
+# paths to store the .stl file and if necessary the mapping of the political coloring
 MATPATH =__file__.replace('routes.py', 'Temp\\Matrix.stl')
 COLORPATH = __file__.replace('routes.py', 'Temp\\Island.txt')
 
-# vom Nutzer gewählte Parameter zur weiteren Verarbeitung der Matrix
+# parameters for matrix processing, choosen by the user
 matrixtype, colortype, experience, quali = "","","",""
-# Defaultwerte für offset und layerwidth, spätere Änderung vom Nutzer möglich
+# default values for offset and layerwidth of the coloring, change by user is possible
 offset = 0
 layerwidth = 1.7
 
@@ -43,19 +43,19 @@ def index():
     global MATPATH, COLORPATH, matrixtype, colortype, experience, quali
     form = FileForm()
     if form.validate_on_submit():
-        # falls die übergebene Datei das passende Format (.stl) hat
+        # check whether the given file is of the correct type (.stl)
         if (form.file.data.filename.endswith('.stl')):
-            form.file.data.save(MATPATH) # Zwischenspeichern der .stl Datei der Matrix
+            form.file.data.save(MATPATH) # save the file temporary
 
-            # Parameter zur Matrixverarbeitung speichern
+            # save the parameters for later use
             matrixtype = form.matrixtype.data
             colortype = form.colortype.data
             experience = form.experience.data
             quali = str(form.quality.data)
 
-            # falls politische Färbung gewählt wurde
+            # saving additional file if colortype is political
             if colortype == 'polit':
-                # prüfe auf passendes Dateiformat
+                # check whether the given file is of the correct type (.txt)
                 if form.colorfile.data.filename.endswith('.txt'):
                     form.colorfile.data.save(COLORPATH)
                 else:
@@ -63,15 +63,14 @@ def index():
                     window.alert("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'not political'.")
                     return render_template('index.html', title='Home', form=form)
 
-            Main.trans([MATPATH, MATPATH, quali]) # Grundtransformation (glätten etc.) der Matrix
+            Main.trans([MATPATH, MATPATH, quali]) # basic transformation of the matrix
 
-            # easy mode:
+            # switch by mode (easy: additional coloring of the matrix, expert: direct forwarding to the next page)
             if experience == 'easy':
                 outpath = MATPATH.replace('.stl', '.obj')
-                # politische Färbung
+                # switch by colortype (political/not political)
                 if colortype == 'polit':
                     Main.color_political([MATPATH, outpath, COLORPATH, quali])
-                # normale Färbung ohne Parameter
                 else:
                     # UMatrix
                     if matrixtype == 'UMatrix':
@@ -97,7 +96,7 @@ def colormodify():
     global colortype, layerwidth, offset, matrixtype, quali, COLORPATH
     form = ColorForm()
 
-    # neue Parameter abspeichern
+    # save new parameters
     if form.validate_on_submit():
         layerwidth = form.layerwidth.data
         offset = form.offset.data
@@ -110,35 +109,34 @@ def colormodify():
             colortype = 'notpolit'
             matrixtype = 'UMatrix'
 
-    #Färbung der Matrix
     outpath = MATPATH.replace('.stl', '.obj')
-    # politische Färbung
+    # switch by colortype (political/UMatrix/PMatrix)
     if colortype == 'polit':
-        # es wurde bereits eine Datei zur politischen Färbung hochgeladen
+        # check whether there is already an existing mapping for the political coloring
         if os.path.isfile(COLORPATH):
-            # eine weitere Datei des richtigen Formats wurde hochgeladen -> update COLORFILE
+            # if there is another mapping -> update COLORFILE
             if form.colorfile.data.filename.endswith('.txt'):
                 os.remove(COLORPATH)
                 form.colorfile.data.save(COLORPATH)
-            # führe Färbung durch
+            # coloring
             Main.color_political([MATPATH, outpath, COLORPATH, quali])
-        # keine alte Datei vorhanden, aber neue Datei
+        # no existing file but a new one
         elif form.colorfile.data.filename.endswith('.txt'):
             form.colorfile.data.save(COLORPATH)
-            # führe Färbung durch
+            # coloring
             Main.color_political([MATPATH, outpath, COLORPATH, quali])
-        else:
+        else: # no mapping found
             print("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'geographical' or 'heatmap'.")
             window.alert("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'geographical' or 'heatmap'.")
             return render_template('colormodify.html', title='Color', form=form)
-    # normale Färbung, falls Parameter angegeben wurden mit diesen, sonst mit default Werten
+    # normal coloring, using parameters given by the user or default values
     else:
         if matrixtype == 'UMatrix':
             Main.color_geographic([MATPATH, outpath, UTEX, str(layerwidth), str(offset)])
         else:
             Main.color_geographic([MATPATH, outpath, PTEX, str(layerwidth), str(offset)])
 
-    # Anzeige der bisherigen Parameter
+    # display the parameters
     form.offset.data = offset
     form.layerwidth.data = layerwidth
     if colortype == 'polit':
@@ -162,12 +160,12 @@ def render_3d():
 def scale():
     form = ScaleForm()
 
-    # Skalieren der Matrix
+    # scale the matrix
     if form.validate_on_submit():
         Main.scale([MATPATH, MATPATH, '0', str(form.x.data), str(form.y.data), str(form.z.data)])
         return render_template('scale.html', title='Scale and Save', form=form)
 
-    # Anzeige der bisherigen Größe
+    # display the old size of the matrix
     dims = Main.scale([MATPATH, MATPATH, '1'])
     form.x.data = dims[0]
     form.y.data = dims[1]
@@ -183,14 +181,14 @@ def saveandexport():
     form = ExportForm()
 
     if form.validate_on_submit():
-        # erstelle Zip Ordner mit allen finalen Dateien
+        # create zip file with final files
         zipper = zipfile.ZipFile(__file__.replace('routes.py', 'Temp.zip'), 'a')
         for i in os.listdir(__file__.replace('routes.py', 'Temp')):
-            if i.startswith('Matrix'): # Speichere dim und Island nicht
+            if i.startswith('Matrix'): # don't save dim and Island
                 zipper.write(os.path.join(__file__.replace('routes.py', 'Temp'), i), i, zipfile.ZIP_DEFLATED)
         zipper.close()
 
-        clearTemp()
+        clearTemp() # clear cache
 
         return send_from_directory(__file__.replace('routes.py', ''),'Temp.zip')
 

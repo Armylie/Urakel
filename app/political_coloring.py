@@ -2,16 +2,16 @@ import numpy as np
 import bpy
 import sys
 
-# import stl
+# clear workspace and import .stl (from inpath)
 def initialize(inpath):
     bpy.ops.object.select_all(action='TOGGLE')
     bpy.ops.object.select_all(action='TOGGLE')
     bpy.ops.object.delete(use_global=False)
     bpy.ops.import_mesh.stl(filepath=inpath)
 
-# Erstellung der Materialien für insgesamt 8 mögliche Klassen (+ Randfarbe)
+# generate materials for 8 potential classes (+ bordercolor)
 def create_mats():
-    # Farben entstammen dem Farbschema tab10
+    # colors from the cholor scheme tab10
     color = [(0.12, 0.47, 0.71), (1.0, 0.5, 0.05), (0.17, 0.63, 0.17), (0.84, 0.15, 0.16), (0.58, 0.40, 0.74),
              (0.89, 0.47, 0.76), (0.74, 0.74, 0.13),(0.09, 0.75, 0.81),(0.5,0.5,0.5)]
 
@@ -21,20 +21,20 @@ def create_mats():
         mat.diffuse_color = color[i]
 
 
-#wenn island[x,y] zu Klasse c gehört, färbe zwischen Knoten x, x+1 und y,y+1
-#wähle hier die Entsprechenden Polygone aus
+# if island[x,y] belongs to class c, color polygons between node x, x+1 and y,y+1
+# this function marks the polygons for class c
 # div = 1
 def markPolygons(island,c,div):
     a = 0
-    # ignoriere letzte Zeile/Spalte, da Mapping über Knoten, wir aber Knoten-1 vertexe haben
+    # ignore last column/row, (mapping given von x nodes, we have x-1 vertexes)
     for x in range(len(island)-1):
         for y in range(len(island[0])-1):
-            if island[x,y] >= c: # erhalte sauberere (nicht blaue) Ränder durch Färben in Aufsteigender Reihenfolge
-                # jeweils zwei Dreiecke pro Punkt in mapping
+            if island[x,y] >= c: # get clean (not blue) edges by coloring in ascending order
+                # two triangles for each datapoint in mapping
                 bpy.context.active_object.data.polygons[a].select = True
                 bpy.context.active_object.data.polygons[a+1].select = True
             a = a + 2
-    if div > 1:
+    if div > 1: # more subdivisions lead to more polygons and a more complicated marking
         a = markPolygons2(island,c,a)
     if div > 2:
         markPolygons3(island,c,a)
@@ -64,29 +64,32 @@ def markPolygons3(island,c,a):
     markPolygons2(island,c,a)
 
 
-# Färbe Cluster i ein (Cluster 0 entspricht dem Rand)
+# color cluster i of island (with div times subdivision) (cluster 0 corresponds to the border)
 def colorOne(island, i,div):
     markPolygons(island, i,div)
     bpy.ops.object.editmode_toggle()
+    # choose and assign the right material
     bpy.context.object.active_material_index = i
     bpy.ops.object.material_slot_assign()
-    bpy.ops.mesh.select_all(action='TOGGLE')
-    bpy.ops.object.editmode_toggle()
+    bpy.ops.mesh.select_all(action='TOGGLE') # deselect all polygons
+    bpy.ops.object.editmode_toggle() # for marking further polygons we need to be outside of the editmode
 
 
+# complete coloring of the matrix at inpath with a mapping from islandpath (saving at outpath)
+# div corresponds to the number of subdivisions
 def color(inpath,outpath,islandpath,div=1):
-    island = np.genfromtxt(islandpath, dtype=int) # Textdatei als np array
+    island = np.genfromtxt(islandpath, dtype=int) # textfile as np array
     classes = findNumbers(island)
     initialize(inpath)
     create_mats()
-    # färbe alle Klassen ein
+    # color all classes
     for i in classes:
        colorOne(island,i,div)
-    # exportiere Dateien (hier kein image benötigt, nur .obj und .mtl, da keine Textur verwendet wird)
+    # export files (no image needed, oly .obj and .mtl, because no use of texture)
     bpy.ops.export_scene.obj(filepath = outpath,path_mode='ABSOLUTE')
 
 
-# Hilfsfunktion zum ermitteln aller auftretenden Zahlen in X
+# find all numbers in X (X is list of lists of ints)
 def findNumbers (X):
     c = []
     for i in range(X.min(),X.max()+1):

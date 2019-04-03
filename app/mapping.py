@@ -1,33 +1,36 @@
 from numpy import genfromtxt, zeros, savetxt
 import numpy as np
 
-# enthält Datenpunkte und zugehörige Klasse
+# paths to the right files need to be changed by the user of this script
+
+# contains datapoints and corresponding classes
 clustering = genfromtxt('36DresdenAlldataMDSn106d40AUclusterung.cls', skip_header=2, dtype=int)
-# enthält Datenpunkte und Koordinaten
+# contains datapoints and corresponding coordinates
 points = genfromtxt('31DresdenAlldataMDSn106d40.bm', skip_header=2, dtype=int)
-# enthält Darstellung der Insel
+# contains representation of the island (island = 0)
 island = genfromtxt('31DresdenAlldataMDSn106d40Island.imx', skip_header=1, dtype=int)
 
-# erstelle ein neues Array: Datenpunkt, x Koordinate, y Koordinate, Klasse
+# generates a new multidimensional list of [datapoint, x coordinate, y coordinate, class]
 def mergePointsAndCluster(points, clustering):
     res = zeros([len(points), 4])
     for i in range(len(points)):
         res[i] = [points[i, 0], points[i, 1], points[i, 2], clustering[i, 1]]
     return res
 
-# stelle Insel durch 1en, Rand duch 0en dar
+# generates new representation of the island (switch ones and zeros so the ones encode the island)
 def switchIsland(island):
     for i in range(len(island)):
         for j in range(len(island[0])):
             island[i,j] = (island[i,j]==0)
 
 
-# ersetze 1 (Insel) durch Klassenbezeichnung (+1 da sonst Konflikte mit Inseldarstellung durch 1
+# substitute ones (island) by classes (+1 to prevent conflicts with the ones that encode the island)
 def clusterIsland(cluster, island):
     x_length = int(len(island)/2)
     y_length = int(len(island[0])/2)
+    # for each datapoint find the point in one of the quadrants that belongs to the island
     for p in cluster:
-        x,y = int(p[1]) -1, int(p[2]) -1 # Indizierung in Tabelle beginnt bei 1
+        x,y = int(p[1]) -1, int(p[2]) -1
         if island[x, y] == 1:
             island[x, y] = p[3] +1
         elif island[x_length + x, y] == 1:
@@ -36,30 +39,31 @@ def clusterIsland(cluster, island):
             island[x, y_length + y] = p[3] +1
         elif island[x_length + x, y_length + y] == 1:
             island[x_length + x, y_length + y] = p[3] +1
-        else: # TODO: gehört das hier hin? oder kan das weg?
+        else: # just in case of error
             print(p)
             print(x_length + x, y_length + y)
 
-# entferne reine Außenbereiche (-> erhalte zugeschnittene Insel)
+# delete border area (-> so only the island remains)
 def cutIsland(island):
     deleter,deletec = [],[]
     tisland = island.transpose()
-    # Nullzeilen löschen
+    # mark rows of zeros
     for x in range(len(island)):
         if np.count_nonzero(island[x]) == 0:
             deleter.append(x)
-    # Nullzeilen löschen
+    # mark columns of zeros
     for x in range(len(tisland)):
         if np.count_nonzero(tisland[x]) == 0:
             deletec.append(x)
+    # delete marked rows and columns
     island = np.delete(island, deleter, axis=0)
     island = np.delete(island, deletec, axis=1)
     return island
 
-# fülle die Insel mit Klassenbezeichnungen auf
+# fill the sparse island with classes
 def fillCluster(island):
     island2 = island.copy()
-    # klassifiziere direkten Kreis um klassifizierten Punkt -> für bessere Verbundenheit von Klassen
+    # classify a direct circle around each classified datapoint -> leads to a better connection between classes
     for x in range(len(island)):
         for y in range(len(island[0])):
             if island[x,y] > 1:
@@ -68,47 +72,43 @@ def fillCluster(island):
                         island2[i,j] = island[x,y]
     c = 1
     island = island2
-    # fülle Werte nach rechts auf
+    # fill to the right
     for x in range(len(island)):
         for y in range(len(island[0])):
             c = fill(island, x, y, c)
-    # fülle Werte nach unten auf
+    # fill down
     for y in range(len(island[0])):
         for x in range(len(island)):
             c = fill(island, x, y, c)
-    # fülle Werte nach links auf
+    # fill to the left
     for x in range(len(island)):
         for y in range(len(island[0]) - 1, -1, -1):
             c = fill(island, x, y, c)
-    # fülle Werte nach oben auf
+    # fill up
     for y in range(len(island[0])):
         for x in range(len(island)-1,-1,-1):
             c = fill(island,x,y,c)
     return island
 
-# Hilfsfunktion -> ändert Zahl in Mapping entsprechend der Klasse/ ändert aktuelle Klasse c
+# changes point at (x,y) in island in the correct way for class c
 def fill(island,x,y,c):
-    if island[x, y] == 1:
+    if island[x, y] == 1: # set class
         island[x, y] = c
-    elif island[x, y] == 0:
+    elif island[x, y] == 0: # space between the island resets the class
         c = 1
-    elif island[x, y] > 0:
+    elif island[x, y] > 0: # update class
         c = island[x, y]
     return c
 
 
 switchIsland(island)
-savetxt('island1.txt', island, fmt='%d')
 res = mergePointsAndCluster(points, clustering)
-savetxt('res.txt', res, fmt='%d')
 clusterIsland(res, island)
-savetxt('island2.txt', island, fmt='%d')
 island = cutIsland(island)
-savetxt('island3.txt', island, fmt='%d')
 island = fillCluster(island)
 
 
-# speichere Mapping in Textdatei
+# save mapping as textfile
 savetxt('island.txt', island, fmt='%d')
 
 

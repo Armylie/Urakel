@@ -5,27 +5,27 @@ import sys
 import bpy
 
 
-# import stl
+# clear workspace and import .stl (from inpath)
 def initialize(inpath):
     bpy.ops.object.select_all(action='TOGGLE')
     bpy.ops.object.select_all(action='TOGGLE')
     bpy.ops.object.delete(use_global=False)
     bpy.ops.import_mesh.stl(filepath=inpath)
 	
-# choose texture, texName = 'UmatrixTexture' oder 'Pmatrix Texture'
+# choose texture, texName = 'UmatrixTexture' or 'Pmatrix Texture'
 def initColor(texName):
     mat = bpy.data.materials.new("newMaterial")
     bpy.context.object.active_material = mat
     tex = bpy.data.textures.get(texName)
     bpy.context.object.active_material.active_texture = tex
 
-    # richtig Positionieren
+    # find right position
     bpy.context.object.active_material.texture_slots[0].texture_coords = 'ORCO'
     bpy.context.object.active_material.texture_slots[0].mapping_x = 'Z'
     bpy.context.object.active_material.texture_slots[0].mapping_y = 'Z'
 
 
-# Bodenfärbung anpassen
+# adjust coloring of the ground
 def setSizeAndOffset (size,offset):
     bpy.context.object.active_material.texture_slots[0].scale[1] = size
     bpy.context.object.active_material.texture_slots[0].offset[1] = offset
@@ -33,16 +33,17 @@ def setSizeAndOffset (size,offset):
 
 
 def mapAndExport(outpath):
-    # UV Mapping erstellen
+    # generate UV-mapping
     bpy.ops.uv.smart_project(island_margin=1)
-    # stelle sicher, dass nicht in Editmode
+    # ensure mode != EDIT
     bpy.ops.object.mode_set(mode='OBJECT')
-    # erstelle und verlinke image (-> TODO: welche Auflösung?)
+    # generate and link image
+    # resolution (here 10000x10000) may be changed
     image = bpy.data.images.new(name="Matrix", width=10000, height=10000)
     for uv_face in bpy.data.objects.get("Matrix").data.uv_textures.active.data:
         uv_face.image = image
     bpy.data.materials["newMaterial"].use_shadeless = True
-    # Rückkehr in Editmode
+    # return to editmode
     bpy.ops.object.mode_set(mode='EDIT')
     bpy.ops.mesh.select_all(action='SELECT') # Notwendig?
     #bake
@@ -55,7 +56,7 @@ def mapAndExport(outpath):
     bpy.ops.export_scene.obj(filepath = outpath,path_mode='ABSOLUTE')
 
 
-# vollständige Färbung
+# complete coloring
 def color(inpath,outpath,texName,size,offset):
     initialize(inpath)
     initColor(texName)
