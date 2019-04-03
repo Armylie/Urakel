@@ -86,6 +86,7 @@ def color(inpath,outpath,islandpath,div=1):
     bpy.ops.export_scene.obj(filepath = outpath,path_mode='ABSOLUTE')
 
 
+# Hilfsfunktion zum ermitteln aller auftretenden Zahlen in X
 def findNumbers (X):
     c = []
     for i in range(X.min(),X.max()+1):

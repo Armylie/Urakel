@@ -31,6 +31,7 @@ def setSizeAndOffset (size,offset):
     bpy.context.object.active_material.texture_slots[0].offset[1] = offset
 
 
+
 def mapAndExport(outpath):
     # UV Mapping erstellen
     bpy.ops.uv.smart_project(island_margin=1)

@@ -151,24 +151,6 @@ def colormodify():
     return render_template('colormodify.html', title='Color', form = form)
 
 
-# TODO: passende Dateien für 3D Anzeige in Renderig Ordner ablegen
-@app.route('/saveandexport', methods=['GET', 'POST'])
-def saveandexport():
-    form = ExportForm()
-
-    if form.validate_on_submit():
-        # erstelle Zip Ordner mit allen finalen Dateien
-        zipper = zipfile.ZipFile(__file__.replace('routes.py', 'Temp.zip'), 'a')
-        for i in os.listdir(__file__.replace('routes.py', 'Temp')):
-            if i.startswith('Matrix'): # Speichere dim und Island nicht
-                zipper.write(os.path.join(__file__.replace('routes.py', 'Temp'), i), i, zipfile.ZIP_DEFLATED)
-        zipper.close()
-
-        clearTemp()
-
-        return send_from_directory(__file__.replace('routes.py', ''),'Temp.zip')
-
-    return render_template('saveandexport.html', title='Save and Export',form = form)
 
 @app.route('/popup')
 def user_popup():
@@ -194,4 +176,24 @@ def scale():
     form.z.data = dims[2]
 
     return render_template('scale.html', title='Scale and Save', form = form)
+
+
+# TODO: passende Dateien für 3D Anzeige in Renderig Ordner ablegen
+@app.route('/saveandexport', methods=['GET', 'POST'])
+def saveandexport():
+    form = ExportForm()
+
+    if form.validate_on_submit():
+        # erstelle Zip Ordner mit allen finalen Dateien
+        zipper = zipfile.ZipFile(__file__.replace('routes.py', 'Temp.zip'), 'a')
+        for i in os.listdir(__file__.replace('routes.py', 'Temp')):
+            if i.startswith('Matrix'): # Speichere dim und Island nicht
+                zipper.write(os.path.join(__file__.replace('routes.py', 'Temp'), i), i, zipfile.ZIP_DEFLATED)
+        zipper.close()
+
+        clearTemp()
+
+        return send_from_directory(__file__.replace('routes.py', ''),'Temp.zip')
+
+    return render_template('saveandexport.html', title='Save and Export',form = form)
 

@@ -36,7 +36,7 @@ def clusterIsland(cluster, island):
             island[x, y_length + y] = p[3] +1
         elif island[x_length + x, y_length + y] == 1:
             island[x_length + x, y_length + y] = p[3] +1
-        else:
+        else: # TODO: gehört das hier hin? oder kan das weg?
             print(p)
             print(x_length + x, y_length + y)
 
@@ -97,12 +97,16 @@ def fill(island,x,y,c):
     return c
 
 
-
-res = mergePointsAndCluster(points, clustering)
 switchIsland(island)
+savetxt('island1.txt', island, fmt='%d')
+res = mergePointsAndCluster(points, clustering)
+savetxt('res.txt', res, fmt='%d')
 clusterIsland(res, island)
+savetxt('island2.txt', island, fmt='%d')
 island = cutIsland(island)
+savetxt('island3.txt', island, fmt='%d')
 island = fillCluster(island)
+
 
 # speichere Mapping in Textdatei
 savetxt('island.txt', island, fmt='%d')
