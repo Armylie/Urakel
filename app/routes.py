@@ -40,8 +40,6 @@ layerwidth = 1.7
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     clearTemp()
-    # TODO: Bilder einblenden je nach gewählter Aktion? (Benny)
-    # TODO: unable dropdowns nach klicken auf next evtl. (Benny)
     global MATPATH, COLORPATH, matrixtype, colortype, experience, quali
     form = FileForm()
     if form.validate_on_submit():
@@ -62,7 +60,7 @@ def index():
                     form.colorfile.data.save(COLORPATH)
                 else:
                     print("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'not political'.")
-                    # TODO: popup (vor Wartebildschirm) (Benny)
+                    window.alert("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'not political'.")
                     return render_template('index.html', title='Home', form=form)
 
             Main.trans([MATPATH, MATPATH, quali]) # Grundtransformation (glätten etc.) der Matrix
@@ -88,7 +86,7 @@ def index():
 
         else:
             print('Invalid file format. Please choose a .stl file.')
-            # TODO: popup (vor Wartebildschirm) (Benny)
+            window.alert('Invalid file format. Please choose a .stl file.')
             return render_template('index.html', title='Home', form=form)
 
     return render_template('index.html', title='Home', form=form)
@@ -131,7 +129,7 @@ def colormodify():
             Main.color_political([MATPATH, outpath, COLORPATH, quali])
         else:
             print("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'geographical' or 'heatmap'.")
-            # TODO: popup (vor Wartebildschirm) (Beny)
+            window.alert("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'geographical' or 'heatmap'.")
             return render_template('colormodify.html', title='Color', form=form)
     # normale Färbung, falls Parameter angegeben wurden mit diesen, sonst mit default Werten
     else:
@@ -178,6 +176,7 @@ def scale():
     return render_template('scale.html', title='Scale and Save', form = form)
 
 
+
 # TODO: passende Dateien für 3D Anzeige in Renderig Ordner ablegen
 @app.route('/saveandexport', methods=['GET', 'POST'])
 def saveandexport():
@@ -196,4 +195,9 @@ def saveandexport():
         return send_from_directory(__file__.replace('routes.py', ''),'Temp.zip')
 
     return render_template('saveandexport.html', title='Save and Export',form = form)
+
+
+@app.route('/render', methods=['GET', 'POST'])
+def render_3d():
+    return render_template('Rendering/index.html', title='Render')
 
