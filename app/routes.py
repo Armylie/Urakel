@@ -192,7 +192,3 @@ def scale():
     form.z.data = dims[2]
 
     return render_template('scale.html', title='Scale and Save', form = form)
-
-@app.route('/render', methods=['GET', 'POST'])
-def render_3d():
-    return render_template('Rendering/index.html', title='Render')
