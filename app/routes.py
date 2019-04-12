@@ -174,7 +174,6 @@ def scale():
     return render_template('scale.html', title='Scale and Save', form = form)
 
 
-
 # TODO: passende Dateien für 3D Anzeige in Renderig Ordner ablegen
 @app.route('/saveandexport', methods=['GET', 'POST'])
 def saveandexport():
@@ -193,9 +192,4 @@ def saveandexport():
         return send_from_directory(__file__.replace('routes.py', ''),'Temp.zip')
 
     return render_template('saveandexport.html', title='Save and Export',form = form)
-
-
-@app.route('/render', methods=['GET', 'POST'])
-def render_3d():
-    return render_template('Rendering/index.html', title='Render')
 
