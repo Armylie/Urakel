@@ -37,7 +37,7 @@ def scale(arguments):
             # -> return new dimensions
 
 
-# order of submitted arguments: [inpath, outpath, texName, size, offset]
+# order of submitted arguments: [inpath, outpath, texName, size, offset, div]
 # important: outpath needs to be .obj
 def color_geographic(arguments):
     argument_string = " ".join(arguments)

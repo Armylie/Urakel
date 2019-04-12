@@ -74,10 +74,10 @@ def index():
                 else:
                     # UMatrix
                     if matrixtype == 'UMatrix':
-                        Main.color_geographic([MATPATH, outpath, UTEX, str(layerwidth), str(offset)])
+                        Main.color_geographic([MATPATH, outpath, UTEX, str(layerwidth), str(offset), quali])
                     # PMatrix
                     else:
-                        Main.color_geographic([MATPATH, outpath, PTEX, str(layerwidth), str(offset)])
+                        Main.color_geographic([MATPATH, outpath, PTEX, str(layerwidth), str(offset), quali])
                 return redirect('/saveandexport')
 
             # expert mode
@@ -132,9 +132,9 @@ def colormodify():
     # normal coloring, using parameters given by the user or default values
     else:
         if matrixtype == 'UMatrix':
-            Main.color_geographic([MATPATH, outpath, UTEX, str(layerwidth), str(offset)])
+            Main.color_geographic([MATPATH, outpath, UTEX, str(layerwidth), str(offset), quali])
         else:
-            Main.color_geographic([MATPATH, outpath, PTEX, str(layerwidth), str(offset)])
+            Main.color_geographic([MATPATH, outpath, PTEX, str(layerwidth), str(offset), quali])
 
     # display the parameters
     form.offset.data = offset

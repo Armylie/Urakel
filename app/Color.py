@@ -33,14 +33,14 @@ def setSizeAndOffset (size,offset):
 
 
 
-def mapAndExport(outpath):
+def mapAndExport(outpath,resolution = 10000):
     # generate UV-mapping
     bpy.ops.uv.smart_project(island_margin=1)
     # ensure mode != EDIT
     bpy.ops.object.mode_set(mode='OBJECT')
     # generate and link image
     # resolution (here 10000x10000) may be changed
-    image = bpy.data.images.new(name="Matrix", width=10000, height=10000)
+    image = bpy.data.images.new(name="Matrix", width=resolution, height=resolution)
     for uv_face in bpy.data.objects.get("Matrix").data.uv_textures.active.data:
         uv_face.image = image
     bpy.data.materials["newMaterial"].use_shadeless = True
@@ -58,12 +58,13 @@ def mapAndExport(outpath):
 
 
 # complete coloring
-def color(inpath,outpath,texName,size,offset):
+def color(inpath,outpath,texName,size,offset,div):
     initialize(inpath)
     initColor(texName)
     setSizeAndOffset(size,offset)
-    mapAndExport(outpath)
+    resolution = [2000,2000,2000]
+    mapAndExport(outpath,resolution[div-1])
 
 
 if __name__ == "__main__":
-    color(sys.argv[6],sys.argv[7],sys.argv[8],float(sys.argv[9]),float(sys.argv[10]))
+    color(sys.argv[6],sys.argv[7],sys.argv[8],float(sys.argv[9]),float(sys.argv[10]),int(sys.argv[11]))
