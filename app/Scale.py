@@ -2,6 +2,7 @@
 
 import bpy # Fehler kann erstmal ignoriert werden, löst sich zur Laufzeit
 import csv
+import os
 import sys
 
 
@@ -34,7 +35,7 @@ if __name__ == "__main__":
         changeDim(float(sys.argv[8]),float(sys.argv[9]),float(sys.argv[10]))
     elif sys.argv[7] == '1':
         # save the X,Y,Z values in a .csv file for further processing
-        with open(__file__.replace('Scale.py','Temp\\dim.csv'),'w') as file:
+        with open(__file__.replace('Scale.py',os.path.join('Temp','dim.csv')),'w') as file:
             csv.writer(file).writerow(getValues())
     # save the new file
     bpy.ops.export_mesh.stl(filepath=sys.argv[6])

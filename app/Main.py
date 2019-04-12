@@ -11,10 +11,10 @@ blenderpath = data.get('BLENDERPATH')
 texpath = __file__.replace('Main.py','Texturierungsumgebung.blend')
 
 # paths for different pythonfiles to be opened in Blender
-trafopath = "\"" + __file__.replace('Main', 'Trafo').replace('/', '\\') + "\""
-scalepath = "\"" + __file__.replace('Main', 'Scale').replace('/', '\\') + "\""
-colorpath = "\"" + __file__.replace('Main', 'Color').replace('/', '\\') + "\""
-pcolorpath = "\"" + __file__.replace('Main', 'political_coloring').replace('/', '\\') + "\""
+trafopath = "\"" + __file__.replace('Main', 'Trafo') + "\""
+scalepath = "\"" + __file__.replace('Main', 'Scale') + "\""
+colorpath = "\"" + __file__.replace('Main', 'Color') + "\""
+pcolorpath = "\"" + __file__.replace('Main', 'PoliticalColoring') + "\""
 
 
 # order of submitted arguments: [inpath, outpath, quality]
@@ -27,11 +27,11 @@ def trans(arguments):
 # order of submitted arguments: [inpath, outpath, modus, X, Y, Z]
 # Modi: 0 - change all dimensions ; 1 - return current dimensions
 def scale(arguments):
-    open(__file__.replace('Main.py', 'Temp\\dim.csv'), 'w').close()  # generate/clear file for saving X,Y,Z values
+    open(__file__.replace('Main.py', os.path.join('Temp','dim.csv')), 'w').close()  # generate/clear file for saving X,Y,Z values
     argument_string = " ".join(arguments)
     os.chdir(blenderpath)
     os.system("blender --background --python " + scalepath + " -- " + argument_string)
-    with open(__file__.replace('Main.py', 'Temp\\dim.csv'), 'r') as file:
+    with open(__file__.replace('Main.py', os.path.join('Temp','dim.csv')), 'r') as file:
         for row in csv.reader(file):  # only one row
             return [float(x) for x in row]
             # -> return new dimensions

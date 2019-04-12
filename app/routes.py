@@ -25,8 +25,8 @@ UTEX = "UmatrixTexture"
 PTEX  = "PmatrixTexture"
 
 # paths to store the .stl file and if necessary the mapping of the political coloring
-MATPATH =__file__.replace('routes.py', 'Temp\\Matrix.stl')
-COLORPATH = __file__.replace('routes.py', 'Temp\\Island.txt')
+MATPATH =__file__.replace('routes.py', os.path.join('Temp','Matrix.stl'))
+COLORPATH = __file__.replace('routes.py', os.path.join('Temp','Island.txt'))
 
 # parameters for matrix processing, choosen by the user
 matrixtype, colortype, experience, quali = "","","",""
@@ -152,6 +152,7 @@ def colormodify():
 def user_popup():
     return render_template('popup.html', title='Popup-Hilfe')
 
+# TODO: passende Dateien für 3D Anzeige in Renderig Ordner ablegen
 @app.route('/render', methods=['GET', 'POST'])
 def render_3d():
     return render_template('Rendering/index.html', title='Render')
@@ -174,7 +175,7 @@ def scale():
     return render_template('scale.html', title='Scale and Save', form = form)
 
 
-# TODO: passende Dateien für 3D Anzeige in Renderig Ordner ablegen
+# TODO: Feedback an User?
 @app.route('/saveandexport', methods=['GET', 'POST'])
 def saveandexport():
     form = ExportForm()

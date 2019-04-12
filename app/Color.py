@@ -2,6 +2,7 @@
 # Allgemein: ob = bpy.data.objects.get("UStar")  statt bpy.context.object
 #--------------------------------------------------------------------
 import sys
+import os
 import bpy
 
 
@@ -49,7 +50,7 @@ def mapAndExport(outpath):
     #bake
     bpy.ops.object.bake_image()
     # save image
-    bpy.data.images['Matrix'].filepath_raw = __file__.replace('Color.py','Temp\\Matrix.png')
+    bpy.data.images['Matrix'].filepath_raw = __file__.replace('Color.py', os.path.join('Temp','Matrix.png'))
     bpy.data.images['Matrix'].file_format = 'PNG'
     bpy.data.images['Matrix'].save()
     # save object
