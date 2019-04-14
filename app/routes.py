@@ -60,7 +60,7 @@ def index():
                     form.colorfile.data.save(COLORPATH)
                 else:
                     print("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'not political'.")
-                    window.alert("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'not political'.")
+                    flash("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'not political'.")
                     return render_template('index.html', title='Home', form=form)
 
             Main.trans([MATPATH, MATPATH, quali]) # basic transformation of the matrix
@@ -85,7 +85,7 @@ def index():
 
         else:
             print('Invalid file format. Please choose a .stl file.')
-            window.alert('Invalid file format. Please choose a .stl file.')
+            flash('Invalid file format. Please choose a .stl file.')
             return render_template('index.html', title='Home', form=form)
 
     return render_template('index.html', title='Home', form=form)
@@ -127,7 +127,7 @@ def colormodify():
             Main.color_political([MATPATH, outpath, COLORPATH, quali])
         else: # no mapping found
             print("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'geographical' or 'heatmap'.")
-            window.alert("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'geographical' or 'heatmap'.")
+            flash("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'geographical' or 'heatmap'.")
             return render_template('colormodify.html', title='Color', form=form)
     # normal coloring, using parameters given by the user or default values
     else:
