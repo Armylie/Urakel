@@ -20,6 +20,7 @@ pcolorpath = "\"" + __file__.replace('Main', 'PoliticalColoring') + "\""
 # order of submitted arguments: [inpath, outpath, quality]
 def trans(arguments):
     argument_string = " ".join(arguments)
+    # TODO: WIndows vs. Linux
     os.chdir(blenderpath)
     os.system("blender --background --python " + trafopath + " -- " + argument_string)
 
