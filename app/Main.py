@@ -1,4 +1,5 @@
 import os
+import platform
 import csv
 
 # open 'database'
@@ -20,8 +21,9 @@ pcolorpath = "\"" + __file__.replace('Main', 'PoliticalColoring') + "\""
 # order of submitted arguments: [inpath, outpath, quality]
 def trans(arguments):
     argument_string = " ".join(arguments)
-    # TODO: WIndows vs. Linux
-    os.chdir(blenderpath)
+    # TODO: Mac? --> https://docs.blender.org/manual/en/latest/render/workflows/command_line.html
+    if platform.system() == 'Windows':
+        os.chdir(blenderpath)
     os.system("blender --background --python " + trafopath + " -- " + argument_string)
 
 
@@ -30,7 +32,8 @@ def trans(arguments):
 def scale(arguments):
     open(__file__.replace('Main.py', os.path.join('Temp','dim.csv')), 'w').close()  # generate/clear file for saving X,Y,Z values
     argument_string = " ".join(arguments)
-    os.chdir(blenderpath)
+    if platform.system() == 'Windows':
+        os.chdir(blenderpath)
     os.system("blender --background --python " + scalepath + " -- " + argument_string)
     with open(__file__.replace('Main.py', os.path.join('Temp','dim.csv')), 'r') as file:
         for row in csv.reader(file):  # only one row
@@ -42,7 +45,8 @@ def scale(arguments):
 # important: outpath needs to be .obj
 def color_geographic(arguments):
     argument_string = " ".join(arguments)
-    os.chdir(blenderpath)
+    if platform.system() == 'Windows':
+        os.chdir(blenderpath)
     os.system("blender --background " + texpath + " --python " + colorpath + " -- " + argument_string)
 
 
@@ -50,7 +54,8 @@ def color_geographic(arguments):
 # important outpath needs to be .obj
 def color_political(arguments):
     argument_string = " ".join(arguments)
-    os.chdir(blenderpath)
+    if platform.system() == 'Windows':
+        os.chdir(blenderpath)
     os.system("blender --background --python " + pcolorpath + " -- " + argument_string)
 
 

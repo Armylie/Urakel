@@ -14,7 +14,7 @@
         </style>
     </head>
     <body>
-        <script src="{{ url_for('.static', filename='three.js') }}"></script>
+        <script src="{{url_for('.static',filename='three.js') }}"></script>
         <script src="{{ url_for('.static', filename='stats.js') }}"></script>
         <script src="{{ url_for('.static', filename='detector.js') }}"></script>
         <script>
@@ -236,7 +236,7 @@
                     console.log(e);
                 }
                 
-                xhr.open( "GET", "{{ url_for('.static', filename='test.stl') }}", true );
+                xhr.open( "GET", "{{ url_for('.static', filename='Matrix.stl') }}", true );
                 xhr.responseType = "arraybuffer";
                 //xhr.setRequestHeader("Accept","text/plain");
                 //xhr.setRequestHeader("Content-Type","text/plain");

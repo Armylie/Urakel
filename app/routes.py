@@ -1,4 +1,5 @@
 import os
+import shutil
 import zipfile
 from flask import flash, redirect, render_template, url_for, send_from_directory
 from app import Main, app
@@ -27,6 +28,9 @@ PTEX  = "PmatrixTexture"
 # paths to store the .stl file and if necessary the mapping of the political coloring
 MATPATH =__file__.replace('routes.py', os.path.join('Temp','Matrix.stl'))
 COLORPATH = __file__.replace('routes.py', os.path.join('Temp','Island.txt'))
+
+# path for showing the 3d file at coloring and export mode
+RENDERPATH = __file__.replace('routes.py', os.path.join('static','Matrix.stl'))
 
 # parameters for matrix processing, choosen by the user
 matrixtype, colortype, experience, quali = "","","",""
@@ -64,6 +68,7 @@ def index():
                     return render_template('index.html', title='Home', form=form)
 
             Main.trans([MATPATH, MATPATH, quali]) # basic transformation of the matrix
+            shutil.copyfile(MATPATH,RENDERPATH) # TODO: Pfad in index ändern
 
             # switch by mode (easy: additional coloring of the matrix, expert: direct forwarding to the next page)
             if experience == 'easy':
