@@ -56,6 +56,6 @@ def color_political(arguments):
     argument_string = " ".join(arguments)
     if platform.system() == 'Windows':
         os.chdir(blenderpath)
-    os.system("blender --background --python " + pcolorpath + " -- " + argument_string)
+    os.system("blender --background " + texpath + " --python " + pcolorpath + " -- " + argument_string)
 
 

@@ -1,12 +1,13 @@
 import numpy as np
 import bpy
 import sys
+import os
 
 # clear workspace and import .stl (from inpath)
 def initialize(inpath):
     bpy.ops.object.select_all(action='TOGGLE')
     bpy.ops.object.select_all(action='TOGGLE')
-    bpy.ops.object.delete(use_global=False)
+    #bpy.ops.object.delete(use_global=False)
     bpy.ops.import_mesh.stl(filepath=inpath)
 
 # generate materials for 8 potential classes (+ bordercolor)
@@ -85,6 +86,9 @@ def color(inpath,outpath,islandpath,div=1):
     # color all classes
     for i in classes:
        colorOne(island,i,div)
+    # render image of colored matrix to be displayed at UI
+    bpy.data.scenes['Scene'].render.filepath = __file__.replace('PoliticalColoring.py', os.path.join('static', ''))
+    bpy.ops.render.render(animation=True)
     # export files (no image needed, oly .obj and .mtl, because no use of texture)
     bpy.ops.export_scene.obj(filepath = outpath,path_mode='ABSOLUTE')
 
@@ -99,7 +103,7 @@ def findNumbers (X):
 
 
 if __name__ == "__main__":
-    color(sys.argv[5],sys.argv[6],sys.argv[7],int(sys.argv[8]))
+    color(sys.argv[6],sys.argv[7],sys.argv[8],int(sys.argv[9]))
 
 
 
