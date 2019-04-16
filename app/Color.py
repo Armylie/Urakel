@@ -10,7 +10,7 @@ import bpy
 def initialize(inpath):
     bpy.ops.object.select_all(action='TOGGLE')
     bpy.ops.object.select_all(action='TOGGLE')
-    bpy.ops.object.delete(use_global=False)
+    #bpy.ops.object.delete(use_global=False)
     bpy.ops.import_mesh.stl(filepath=inpath)
 	
 # choose texture, texName = 'UmatrixTexture' or 'Pmatrix Texture'
@@ -53,6 +53,9 @@ def mapAndExport(outpath,resolution = 10000):
     bpy.data.images['Matrix'].filepath_raw = __file__.replace('Color.py', os.path.join('Temp','Matrix.png'))
     bpy.data.images['Matrix'].file_format = 'PNG'
     bpy.data.images['Matrix'].save()
+    # render image of colored matrix to be displayed at UI
+    bpy.data.scenes['Scene'].render.filepath = __file__.replace('Color.py', os.path.join('static',''))
+    bpy.ops.render.render(animation=True)
     # save object
     bpy.ops.export_scene.obj(filepath = outpath,path_mode='ABSOLUTE')
 

@@ -32,7 +32,7 @@ def buildbase(height,dimz):
 def transform(inpath,outpath,numdiv = 2, numsmooth = 2):
     initialize(inpath)
     dims =  bpy.context.object.dimensions # [x,y,z] dimension
-    center(dims[0],dims[1])
+    #center(dims[0],dims[1])
     smooth(numdiv,numsmooth)
     buildbase(dims[2]/4,dims[2]) # ratio of total height and base can be changed (in consequence offset and layerwidth need to be adjusted)
     bpy.ops.export_mesh.stl(filepath=outpath)
