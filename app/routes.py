@@ -67,8 +67,7 @@ def index():
                     flash("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'not political'.")
                     return render_template('index.html', title='Home', form=form)
 
-            Main.trans([MATPATH, MATPATH, quali]) # basic transformation of the matrix
-            shutil.copyfile(MATPATH,RENDERPATH) # TODO: Pfad in index ändern
+            Main.trans([MATPATH, MATPATH, quali, RENDERPATH]) # basic transformation of the matrix
 
             # switch by mode (easy: additional coloring of the matrix, expert: direct forwarding to the next page)
             if experience == 'easy':
@@ -157,7 +156,6 @@ def colormodify():
 def user_popup():
     return render_template('popup.html', title='Popup-Hilfe')
 
-# TODO: passende Dateien für 3D Anzeige in Renderig Ordner ablegen
 @app.route('/render', methods=['GET', 'POST'])
 def render_3d():
     return render_template('Rendering/index.html', title='Render')
@@ -168,6 +166,10 @@ def scale():
 
     # scale the matrix
     if form.validate_on_submit():
+        # save additional Matrix for 3d View
+        # z.data = base + z = 1/4 * z + z = 5/4 * z   <=> z = 4/5 * z.Data
+        Main.scale([RENDERPATH, RENDERPATH, '0', str(form.x.data), str(form.y.data), str(form.z.data*4/5)])
+
         Main.scale([MATPATH, MATPATH, '0', str(form.x.data), str(form.y.data), str(form.z.data)])
         return render_template('scale.html', title='Scale and Save', form=form)
 
