@@ -1,9 +1,17 @@
 import os
 import shutil
 import zipfile
-from flask import flash, redirect, render_template, url_for, send_from_directory
+from flask import flash, redirect, render_template, url_for, send_from_directory, make_response
 from app import Main, app
 from app.forms import FileForm, ScaleForm, ColorForm, ExportForm
+from functools import update_wrapper
+
+def nocache(f):
+    def new_func(*args, **kwargs):
+        resp = make_response(f(*args, **kwargs))
+        resp.cache_control.no_cache = True
+        return resp
+    return update_wrapper(new_func, f)
 
 # delete all files in Temp
 def clearTemp():
