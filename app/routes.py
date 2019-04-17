@@ -165,6 +165,7 @@ def user_popup():
     return render_template('popup.html', title='Popup-Hilfe')
 
 @app.route('/render', methods=['GET', 'POST'])
+@nocache
 def render_3d():
     return render_template('Rendering/index.html', title='Render')
 
