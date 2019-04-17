@@ -165,9 +165,11 @@ def user_popup():
     return render_template('popup.html', title='Popup-Hilfe')
 
 @app.route('/render', methods=['GET', 'POST'])
-@nocache
+#@nocache
 def render_3d():
-    return render_template('Rendering/index.html', title='Render')
+    resp = make_response(render_template('Rendering/index.html', title='Render'))
+    resp.cache_control.no_cache = True
+    return resp
 
 @app.route('/scale', methods=['GET', 'POST'])
 def scale():
