@@ -18,11 +18,14 @@ div{
 }
 .contentpane .row{
   margin-bottom:1%;
-  margin-top:1%;
+  margin-top:1%
 }
 .previewpane{
   margin: 1%;
-  background-color: lightblue
+  background-color: white;
+  border-style: solid;
+  border-radius: 5px;
+  border-color: #089383
 }
 img{
   padding: 2%;
