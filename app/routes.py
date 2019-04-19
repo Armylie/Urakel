@@ -214,4 +214,4 @@ def saveandexport():
 
 @app.route('/popuphelp', methods=['GET', 'POST'])
 def popuphelp():
-    render_template('popup.html', title='Popup-Help')
+    return render_template('popup.html', title='Popup-Help')
