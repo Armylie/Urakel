@@ -10,7 +10,11 @@ div{
 }
 
 .nextbutton{
-  background-color: darkgrey
+  color:  #089383;
+}
+button{
+  background-color: #089383;
+  color: white;
 }
 .contentpane{
   background-color: white;
@@ -18,7 +22,7 @@ div{
 }
 .contentpane .row{
   margin-bottom:1%;
-  margin-top:1%
+  margin-top:1%;
 }
 .previewpane{
   margin: 1%;
