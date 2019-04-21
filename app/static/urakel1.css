@@ -10,7 +10,11 @@ div{
 }
 
 .nextbutton{
-  background-color: darkgrey
+  color:  #089383;
+}
+button{
+  background-color: #089383;
+  color: white;
 }
 .contentpane{
   background-color: white;
@@ -22,7 +26,10 @@ div{
 }
 .previewpane{
   margin: 1%;
-  background-color: lightblue
+  background-color: white;
+  border-style: solid;
+  border-radius: 5px;
+  border-color: #089383
 }
 img{
   padding: 2%;
@@ -46,4 +53,20 @@ img{
 }
 h3{
   text-align:left
+}
+#submitfield{
+  background-color: #089383;
+  color: white;
+}
+#applycolor{
+  background-color: #089383;
+  color: white;
+}
+#applyscale{
+  background-color: #089383;
+  color: white;
+}
+#exportsubmit{
+  background-color: #089383;
+  color: white;
 }
