@@ -21,7 +21,6 @@ pcolorpath = "\"" + __file__.replace('Main', 'PoliticalColoring') + "\""
 # order of submitted arguments: [inpath, outpath, quality]
 def trans(arguments):
     argument_string = " ".join(arguments)
-    # TODO: Mac? --> https://docs.blender.org/manual/en/latest/render/workflows/command_line.html
     if platform.system() == 'Windows':
         os.chdir(blenderpath)
     os.system("blender --background --python " + trafopath + " -- " + argument_string)

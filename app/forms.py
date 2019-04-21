@@ -14,7 +14,7 @@ class FileForm(FlaskForm):
 
 
 class ScaleForm(FlaskForm):
-    x = DecimalField(validators = [DataRequired()], id='xvalue')
+    x = DecimalField(validators = [DataRequired()],number_format=float, id='xvalue')
     y = DecimalField(validators = [DataRequired()], id='yvalue')
     z = DecimalField(validators = [DataRequired()], id='zvalue')
     submit = SubmitField('Apply', id="applycolor")

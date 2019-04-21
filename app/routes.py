@@ -67,17 +67,18 @@ def index():
 
             # saving additional file if colortype is political
             if colortype == 'polit':
-                # TODO: Amelie muss testen
-                if not form.colorfile.data:
-                    print('Nö. ')
-                else:
-                    print('Jap. ')
                 # check whether the given file is of the correct type (.txt)
-                if form.colorfile.data.filename.endswith('.txt'):
-                    form.colorfile.data.save(COLORPATH)
+                # check whether a file exists
+                if form.colorfile.data:
+                    if form.colorfile.data.filename.endswith('.txt'):
+                        form.colorfile.data.save(COLORPATH)
+                    else:
+                        print("Invalid mapping for political coloring. Please add correct mapping or choose 'gradient'.")
+                        flash("Invalid mapping for political coloring. Please add correct mapping or choose 'gradient'.")
+                        return render_template('index.html', title='Home', form=form)
                 else:
-                    print("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'not political'.")
-                    flash("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'not political'.")
+                    print("Missing mapping for political coloring. Please add correct mapping or choose 'gradient'.")
+                    flash("Missing mapping for political coloring. Please add correct mapping or choose 'gradient'.")
                     return render_template('index.html', title='Home', form=form)
 
             Main.trans([MATPATH, MATPATH, quali, RENDERPATH]) # basic transformation of the matrix
@@ -117,7 +118,7 @@ def colormodify():
     if form.validate_on_submit():
         print('----------------------validate-----------------')
         layerwidth = form.layerwidth.data
-        # TODO: Hää?
+        # TODO: nur Zahlen akzeptieren
         if form.offset.data:
             print(form.offset.data)
             offset = form.offset.data
@@ -141,20 +142,25 @@ def colormodify():
         # check whether there is already an existing mapping for the political coloring
         if os.path.isfile(COLORPATH):
             # if there is another mapping -> update COLORFILE
-            # TODO: Fehler wie in index fixen
-            if form.colorfile.data.filename.endswith('.txt'):
-                os.remove(COLORPATH)
-                form.colorfile.data.save(COLORPATH)
-            # coloring
-            Main.color_political([MATPATH, outpath, COLORPATH, quali])
+            if form.colorfile.data:
+                if form.colorfile.data.filename.endswith('.txt'):
+                    os.remove(COLORPATH)
+                    form.colorfile.data.save(COLORPATH)
+                # coloring
+                Main.color_political([MATPATH, outpath, COLORPATH, quali])
         # no existing file but a new one
-        elif form.colorfile.data.filename.endswith('.txt'):
-            form.colorfile.data.save(COLORPATH)
-            # coloring
-            Main.color_political([MATPATH, outpath, COLORPATH, quali])
+        elif form.colorfile.data:
+            if form.colorfile.data.filename.endswith('.txt'):
+                form.colorfile.data.save(COLORPATH)
+                # coloring
+                Main.color_political([MATPATH, outpath, COLORPATH, quali])
+            else:
+                print("Invalid mapping for political coloring. Please add correct mapping or choose 'geographical' or 'heatmap'.")
+                flash("Invalid mapping for political coloring. Please add correct mapping or choose 'geographical' or 'heatmap'.")
+                return render_template('colormodify.html', title='Color', form=form)
         else: # no mapping found
-            print("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'geographical' or 'heatmap'.")
-            flash("Missing or invalid mapping for political coloring. Please add correct mapping or choose 'geographical' or 'heatmap'.")
+            print("Missing mapping for political coloring. Please add correct mapping or choose 'geographical' or 'heatmap'.")
+            flash("Missing mapping for political coloring. Please add correct mapping or choose 'geographical' or 'heatmap'.")
             return render_template('colormodify.html', title='Color', form=form)
     # normal coloring, using parameters given by the user or default values
     else:
@@ -193,6 +199,7 @@ def scale():
 
     # scale the matrix
     if form.validate_on_submit():
+        # TODO: nur Zahlen akzeptieren
         # save additional Matrix for 3d View
         # z.data = base + z = 1/4 * z + z = 5/4 * z   <=> z = 4/5 * z.Data
         Main.scale([RENDERPATH, RENDERPATH, '0', str(form.x.data), str(form.y.data), str(form.z.data*4/5)])
