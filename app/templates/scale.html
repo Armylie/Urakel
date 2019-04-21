@@ -4,6 +4,11 @@
     <link rel="stylesheet"
           href="{{ url_for('.static', filename='urakel1.css') }}">
 {% endblock %}
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
 {% block scripts %}
     <script src="{{ url_for('.static', filename='urakel2.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -41,7 +46,7 @@
     </script>
     {{ super() }}
 {% endblock %}
-{% block title %}PrUnt - Matrix skalieren{% endblock %}
+{% block title %}PrUnt - scale Matrix{% endblock %}
 
 
 {% block content %}
@@ -54,11 +59,12 @@
                     </div>
                     <p class="navbar-text">PrUnt - a software by Urakel</p>
                     <div class="nav navbar-nav navbar-right">
-                        <a href="//localhost:5000/popuphelp" target="_blank"><h3><span class="glyphicon glyphicon-question-sign"></span></h3></a>
+                        <a href="{{ url_for('.static', filename='usermanual.pdf') }}" target="_blank"><h3><span class="glyphicon glyphicon-question-sign"></span></h3></a>
                     </div>
                 </div>
             </nav>
         </div>
+        
         <div class="row">
             <div class="col-lg-6">
                 <div class="contentpane">
@@ -88,7 +94,8 @@
                     <h1>Scaling of the Matrix</h1>
                     On this page you are changing the size of your future matrix. In order to keep the x and y parameter ratio, you
                     can mark the checkbox underneath the values to keep those values linked together. If you want to change them 
-                    individually please untick the checkbox. The value of the z-axis has to be modified individually.
+                    individually please untick the checkbox. The value of the z-axis has to be modified individually. You have to press 
+                    "Apply" and then reload with clearing your cache in order to change the Matrix.
                     <iframe id="Vorschaubild" src="//localhost:5000/render" height="500" width="500"></iframe>
                 </div>
             </div>

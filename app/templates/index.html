@@ -45,7 +45,7 @@
                     </div>
                     <p class="navbar-text">PrUnt - a software by Urakel</p>
                     <div class="nav navbar-nav navbar-right">
-                        <a href="//localhost:5000/popuphelp" target="_blank"><h3><span class="glyphicon glyphicon-question-sign"></span></h3></a>
+                        <a href="{{ url_for('.static', filename='usermanual.pdf') }}" target="_blank"><h3><span class="glyphicon glyphicon-question-sign"></span></h3></a>
                     </div>
                 </div>
             </nav>
@@ -55,7 +55,7 @@
             <div class="col-lg-6">
                 <div class="contentpane">
 
-                    <h3>Choose your matrix-style:</h3>
+                    <h3>Choose your Matrix-Style:</h3>
                     <div class="row">
                         <div class="col-lg-3 col-lg-offset-1">
                             <!-- <button class="btn btn-primary btn-lg" onclick="myFunction()">U-Matrix</button>-->
@@ -105,7 +105,7 @@
                                     </div>
                             </div>
                         </div>
-                        <h3><b><u>Add Color-Scheme</b>(Only for Political-Coloring):</u></h3>
+                        <h3><b><u>Add Color-Scheme</b>(Has to be a txt.file) Only for Political-Coloring):</u></h3>
                         <div class="row">
                             <div class="col-lg-6 col-lg-offset-1">
                                 {{ form.hidden_tag() }}
@@ -130,8 +130,8 @@
                             <div id=welcome_text>
                                 <h2>„Welcome to PrUnt!<br>
                                     <small>This is a software where you can generate a print-ready U-Matrix or P-Matrix
-                                        with different colorscemes and dimensions fitted to your needs. First you should
-                                        choose if you’d like to work with a U-Matrix or P-Matrix and Upload your .stl
+                                        with different color schemes and dimensions fitted to your needs. First you should
+                                        choose if you’d like to work with a U-Matrix or P-Matrix and upload your .stl
                                         file to get started. At every screen you can find help via the
                                         <span class="glyphicon glyphicon-question-sign"></span> button at the
                                         top right corner.“
