@@ -40,7 +40,7 @@ def transform(inpath, outpath, renderpath, numdiv=2, numsmooth=2, ):
     dims = bpy.context.object.dimensions  # [x,y,z] dimension
     # center(dims[0],dims[1])
     smooth(numdiv, numsmooth)
-    # save version without base for 3d view
+    # save version without base for 3d view (base can't be displayed in the right way)
     bpy.ops.export_mesh.stl(filepath = renderpath)
 
     buildbase(dims[2] / 4, dims[2])  # ratio of total height and base can be changed (in consequence offset and layerwidth need to be adjusted)

@@ -6,13 +6,13 @@
 
 
 {% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes>
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
+    {% if messages %}
+        <ul class=flashes>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endwith %}
 
 
@@ -26,9 +26,9 @@
         });
     </script>
     <script>
-        document.getElementById("submitfield").onclick = function(){
+        document.getElementById("submitfield").onclick = function () {
             window.alert("Depending on your settings the processing could take a few seconds up to a few minutes. Please wait patiently - Any changes you are applying to the previously set parameters won't affect the result of this run!");
-            }
+        }
     </script>
     {{ super() }}
 {% endblock %}
@@ -59,66 +59,65 @@
                     <div class="row">
                         <div class="col-lg-3 col-lg-offset-1">
                             <!-- <button class="btn btn-primary btn-lg" onclick="myFunction()">U-Matrix</button>-->
-                        <form action="" method="post" enctype="multipart/form-data" validate>
-                        
-                             <b><u> {{ form.matrixtype.label }}</u></b>
-                                        {{ form.matrixtype() }}
+                            <form action="" method="post" enctype="multipart/form-data" validate>
+
+                                <b><u> {{ form.matrixtype.label }}</u></b>
+                                {{ form.matrixtype() }}
                         </div>
                         <div class="col-lg-3 col-lg-offset-1">
                             <b><u> {{ form.colortype.label }}</u></b>
-                                        {{ form.colortype }}
+                            {{ form.colortype }}
                             <!-- <button class="btn btn-primary btn-lg" onclick="myFunction2()">P-Matrix</button>-->
-                       </div>
+                        </div>
                         <div class="col-lg-3 col-lg-offset-1" id="EasyExpert">
-                                <b><u> {{ form.experience.label }}</u></b>
-                                {{ form.experience }}
+                            <b><u> {{ form.experience.label }}</u></b>
+                            {{ form.experience }}
                             <!--<button class="btn btn-primary btn-lg" onclick="myFunction3()">Easy-Mode?</button>-->
                         </div>
                     </div>
                     <br><br>
 
 
-                    
-                        <h3>Choose your .stl file and desired quality:</h3>
-                        <div class="row">
-                            <div class="col-lg-6 col-lg-offset-1">
-                                {{ form.hidden_tag() }}
-                                <h4>
-                                    {{ form.file() }}
-                                </h4>
-                                
-                            </div>
-                            <div class="col-lg-5">
-                                <h4>
-                                    <div data-trigger="hover" title="&nbsp;&nbsp;&nbsp;&nbsp;Information&emsp;"
-                                         data-content=" 
+                    <h3>Choose your .stl file and desired quality:</h3>
+                    <div class="row">
+                        <div class="col-lg-6 col-lg-offset-1">
+                            {{ form.hidden_tag() }}
+                            <h4>
+                                {{ form.file() }}
+                            </h4>
+
+                        </div>
+                        <div class="col-lg-5">
+                            <h4>
+                                <div data-trigger="hover" title="&nbsp;&nbsp;&nbsp;&nbsp;Information&emsp;"
+                                     data-content="
                                     Low needs at least:
                                     32-bit dual core 2Ghz CPU; 2 GB RAM : Delivers a less smooth Matrix.
                                     Medium needs around:
                                     64-bit quad core CPU, 8 GB RAM: Delivers a smooth Matrix.
                                     High needs around:
                                     64-bit eight core CPU, 16 GB RAM: Delivers a super smooth Matrix.">
-                                        <b><u> {{ form.quality.label }}</u></b>
-                                        {{ form.quality() }}
-                                        <span class="glyphicon glyphicon-info-sign"></span>
-                                    </div>
-                                </h4>
-                            </div>
+                                    <b><u> {{ form.quality.label }}</u></b>
+                                    {{ form.quality() }}
+                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                </div>
+                            </h4>
                         </div>
-                        <br>
-                        <h3>Only For Political-Coloring: <b><u>Add Color-Scheme</u></b></h3>
-                        <div class="row">
-                            <div class="col-lg-6 col-lg-offset-1">
-                                {{ form.hidden_tag() }}
-                                <h4>
-                                    {{ form.colorfile() }}
-                                </h4>
-                            </div>
-                            <div class="col-lg-5">
+                    </div>
+                    <br>
+                    <h3>Only For Political-Coloring: <b><u>Add Color-Scheme</u></b></h3>
+                    <div class="row">
+                        <div class="col-lg-6 col-lg-offset-1">
+                            {{ form.hidden_tag() }}
+                            <h4>
+                                {{ form.colorfile() }}
+                            </h4>
+                        </div>
+                        <div class="col-lg-5">
                             <!--<div class="col-lg-3 col-lg-offset-9">-->
-                                {{ form.submit(class_="btn btn-info btn-lg") }}
-                            </div>
+                            {{ form.submit(class_="btn btn-info btn-lg") }}
                         </div>
+                    </div>
                     </form>
 
                 </div>

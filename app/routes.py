@@ -67,6 +67,11 @@ def index():
 
             # saving additional file if colortype is political
             if colortype == 'polit':
+                # TODO: Amelie muss testen
+                if not form.colorfile.data:
+                    print('Nö. ')
+                else:
+                    print('Jap. ')
                 # check whether the given file is of the correct type (.txt)
                 if form.colorfile.data.filename.endswith('.txt'):
                     form.colorfile.data.save(COLORPATH)
@@ -110,16 +115,25 @@ def colormodify():
 
     # save new parameters
     if form.validate_on_submit():
+        print('----------------------validate-----------------')
         layerwidth = form.layerwidth.data
-        offset = form.offset.data
+        # TODO: Hää?
+        if form.offset.data:
+            print(form.offset.data)
+            offset = form.offset.data
+        else:
+            print('keine Daten')
+            offset = 0
         if form.colorscheme.data == 'polit':
             colortype = 'polit'
-        elif form.colorscheme.data == 'heat':
+
+        elif form.colorscheme.data == 'PMatrix':
             colortype = 'notpolit'
             matrixtype = 'PMatrix'
         else: # geographical
             colortype = 'notpolit'
             matrixtype = 'UMatrix'
+            print('---------------------------UMatrix-------------------')
 
     outpath = MATPATH.replace('.stl', '.obj')
     # switch by colortype (political/UMatrix/PMatrix)
@@ -127,6 +141,7 @@ def colormodify():
         # check whether there is already an existing mapping for the political coloring
         if os.path.isfile(COLORPATH):
             # if there is another mapping -> update COLORFILE
+            # TODO: Fehler wie in index fixen
             if form.colorfile.data.filename.endswith('.txt'):
                 os.remove(COLORPATH)
                 form.colorfile.data.save(COLORPATH)
@@ -144,6 +159,7 @@ def colormodify():
     # normal coloring, using parameters given by the user or default values
     else:
         if matrixtype == 'UMatrix':
+            print('---------------------------UMatrix-------------------')
             Main.color_geographic([MATPATH, outpath, UTEX, str(layerwidth), str(offset), quali])
         else:
             Main.color_geographic([MATPATH, outpath, PTEX, str(layerwidth), str(offset), quali])
@@ -165,7 +181,7 @@ def user_popup():
     return render_template('popup.html', title='Popup-Hilfe')
 
 @app.route('/render', methods=['GET', 'POST'])
-#@nocache
+@nocache
 def render_3d():
     resp = make_response(render_template('Rendering/index.html', title='Render'))
     resp.cache_control.no_cache = True

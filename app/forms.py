@@ -20,8 +20,8 @@ class ScaleForm(FlaskForm):
     submit = SubmitField('Apply')
 
 class ColorForm(FlaskForm):
-    colorscheme = SelectField('Color-Scheme', choices = [('geo','Geographical'),('heat','Heatmap'),('polit','Political')], coerce= str,validators=[DataRequired()], id ='colorschemevalue')
-    offset =  DecimalField(validators = [DataRequired()], id='offsetvalue')
+    colorscheme = SelectField('Color-Scheme', choices = [('UMatrix','Geographical'),('PMatrix','Heatmap'),('polit','Political')], coerce= str,validators=[DataRequired()])
+    offset =  DecimalField(id='offsetvalue')
     layerwidth =  DecimalField(validators = [DataRequired()], id='layervalue')
     colorfile = FileField()
     submit = SubmitField('Apply')
