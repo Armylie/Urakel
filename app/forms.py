@@ -8,7 +8,7 @@ class FileForm(FlaskForm):
     colorfile = FileField()
     quality = SelectField('Quality', choices = [(1,'low'),(2,'medium'),(3,'high')], coerce= int,validators=[DataRequired()])
     matrixtype = SelectField('Matrix-Type', choices = [('UMatrix','U-Matrix'),('PMatrix','P-Matrix')], id='matrixvalue', coerce= str,validators=[DataRequired()])
-    colortype  = SelectField('Color-Type', choices = [('notpolit','Not Political'),('polit','Political')], coerce= str,validators=[DataRequired()])
+    colortype  = SelectField('Color-Type', choices = [('notpolit','Gradient'),('polit','Political')], coerce= str,validators=[DataRequired()])
     experience = SelectField('Settings', choices = [('easy','Easy-Mode'),('expert','Expert-Mode')], coerce= str,validators=[DataRequired()])
     submit = SubmitField('Next', id="submitfield")
 
