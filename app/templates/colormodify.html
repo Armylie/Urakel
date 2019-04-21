@@ -26,19 +26,20 @@
 
 {% block content %}
     <div class="container">
-    <div class="row">
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <img src="../static/Icon.png" height="50" width="50">
+        <div class="row">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <img src="../static/Icon.png" height="50" width="50">
+                    </div>
+                    <p class="navbar-text">PrUnt - a software by Urakel</p>
+                    <div class="nav navbar-nav navbar-right">
+                        <a href="{{ url_for('.static', filename='usermanual.pdf') }}" target="_blank"><h3><span class="glyphicon glyphicon-question-sign"></span></h3></a>
+                    </div>
                 </div>
-                <p class="navbar-text">PrUnt - a software by Urakel</p>
-                <div class="nav navbar-nav navbar-right">
-                    <h3><span class="glyphicon glyphicon-question-sign"></span></h3>
-                </div>
-            </div>
-        </nav>
-    </div>
+            </nav>
+        </div>
+        
     <div class="row">
         <div class="col-lg-6">
             <div class="contentpane">
