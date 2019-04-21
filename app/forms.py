@@ -17,14 +17,14 @@ class ScaleForm(FlaskForm):
     x = DecimalField(validators = [DataRequired()], id='xvalue')
     y = DecimalField(validators = [DataRequired()], id='yvalue')
     z = DecimalField(validators = [DataRequired()], id='zvalue')
-    submit = SubmitField('Apply')
+    submit = SubmitField('Apply', id="applycolor")
 
 class ColorForm(FlaskForm):
     colorscheme = SelectField('Color-Scheme', choices = [('UMatrix','Geographical'),('PMatrix','Heatmap'),('polit','Political')], coerce= str,validators=[DataRequired()])
     offset =  DecimalField(id='offsetvalue')
     layerwidth =  DecimalField(validators = [DataRequired()], id='layervalue')
     colorfile = FileField()
-    submit = SubmitField('Apply')
+    submit = SubmitField('Apply', id="applyscale")
 
 class ExportForm(FlaskForm):
-    submit = SubmitField('Export')
+    submit = SubmitField('Export', id="exportsubmit")
