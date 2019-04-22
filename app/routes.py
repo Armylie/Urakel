@@ -116,14 +116,12 @@ def colormodify():
 
     # save new parameters
     if form.validate_on_submit():
-        print('----------------------validate-----------------')
         layerwidth = form.layerwidth.data
-        # TODO: nur Zahlen akzeptieren
+        # DecimalField doesn't recognize the value "0" as valid, check manually
         if form.offset.data:
             print(form.offset.data)
             offset = form.offset.data
         else:
-            print('keine Daten')
             offset = 0
         if form.colorscheme.data == 'polit':
             colortype = 'polit'
@@ -134,7 +132,8 @@ def colormodify():
         else: # geographical
             colortype = 'notpolit'
             matrixtype = 'UMatrix'
-            print('---------------------------UMatrix-------------------')
+    else: # input is not a number
+        print('Please enter a valid number')
 
     outpath = MATPATH.replace('.stl', '.obj')
     # switch by colortype (political/UMatrix/PMatrix)
@@ -165,7 +164,6 @@ def colormodify():
     # normal coloring, using parameters given by the user or default values
     else:
         if matrixtype == 'UMatrix':
-            print('---------------------------UMatrix-------------------')
             Main.color_geographic([MATPATH, outpath, UTEX, str(layerwidth), str(offset), quali])
         else:
             Main.color_geographic([MATPATH, outpath, PTEX, str(layerwidth), str(offset), quali])
@@ -199,7 +197,8 @@ def scale():
 
     # scale the matrix
     if form.validate_on_submit():
-        # TODO: nur Zahlen akzeptieren
+        print("---------------------valid----------------------")
+        print("X:     ", type(form.x.data))
         # save additional Matrix for 3d View
         # z.data = base + z = 1/4 * z + z = 5/4 * z   <=> z = 4/5 * z.Data
         Main.scale([RENDERPATH, RENDERPATH, '0', str(form.x.data), str(form.y.data), str(form.z.data*4/5)])
@@ -207,11 +206,16 @@ def scale():
         Main.scale([MATPATH, MATPATH, '0', str(form.x.data), str(form.y.data), str(form.z.data)])
         return render_template('scale.html', title='Scale and Save', form=form)
 
+    # TODO? wird auch ganz am Anfang angezeigt, Problem?
+    if not form.x.data:
+        print('Please enter a number.')
+
     # display the old size of the matrix
     dims = Main.scale([MATPATH, MATPATH, '1'])
     form.x.data = dims[0]
     form.y.data = dims[1]
     form.z.data = dims[2]
+
 
     return render_template('scale.html', title='Scale and Save', form = form)
 
