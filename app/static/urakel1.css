@@ -70,3 +70,10 @@ h3{
   background-color: #089383;
   color: white;
 }
+.labelerror{
+   background-color:white;
+   color: red;
+}
+.labelnoerror{
+   color: red;
+}
